@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ssh sebiva@remote1.student.chalmers.se

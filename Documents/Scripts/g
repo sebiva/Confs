@@ -1,0 +1,17 @@
+#!/bin/zsh
+
+
+if [[ "$1" == "s" ]]; then
+    git status
+elif [[ "$1" == "go" ]]; then
+    if [[ "$2" == "gui" ]]; then
+        cd $HOME/Documents/Chalmers-Kurser/Kandidat/gulliverbachelor2014/software/gui_client/ && git status
+    elif [[ "$2" == "pax" ]]; then
+        cd $HOME/Documents/Chalmers-Kurser/Kandidat/paxos/ && git status
+    elif [[ "$2" == "tra" ]]; then
+        cd $HOME/Documents/Dev/Sailfish/Travelplanner/ && git status
+
+    fi
+else 
+    git "$@"
+fi

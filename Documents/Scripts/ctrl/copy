@@ -1,0 +1,3 @@
+#!/bin/sh 
+
+cat ~/Documents/ctrl/copy.txt | xmacroplay ":0.0" 

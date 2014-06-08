@@ -1,0 +1,7 @@
+KeyStrRelease Alt_L
+KeyStrRelease o
+
+KeyStrPress Control_L
+KeyStr s
+KeyStrRelease Control_L
+

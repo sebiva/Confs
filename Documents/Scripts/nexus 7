@@ -1,0 +1,3 @@
+sudo mtpfs -o allow_other /media/nexus7
+sudo umount /media/nexus7
+df- h

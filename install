@@ -6,31 +6,58 @@ echo "Installing config files from $SCRIPTPATH to $HOME"
 
 #Takes the file to install as an argument
 function installfile {
-if [ $# == 1 ]
+if [ "$#" == 1 ]
 then
-    if [ ! -e $HOME/$1 ] && [ -e $SCRIPTPATH/$1 ]
+    if { [ ! -e "$HOME/$1" ] || [ -L "$HOME/$1" ]; } && [ -e "$SCRIPTPATH/$1" ]
     then 
-        ln -s $SCRIPTPATH/$1 $HOME/$1
-        echo "$1 installed"
+        if [ -L "$HOME/$1" ]
+        then
+            rm "$HOME/$1"
+            msg="$1 updated"
+        else
+            msg="$1 installed"
+        fi
+        ln -s "$SCRIPTPATH/$1" "$HOME/$1"
+        echo "$msg"
     fi
 fi
 }
 
-installfile .emacs
-installfile .zshrc
-installfile .zsh_history
-installfile .bash_profile
-installfile .bashrc
-installfile .bash_history
-installfile .bashcolor
-installfile .bash_logout
-installfile .gitconfig
-installfile .git-credentials
-installfile .git-prompt.sh
-installfile .aspell.en.prepl
-installfile .aspell.en.pws
-installfile .aspell.sv.prepl
-installfile .aspell.sv.pws
-installfile .profile
-installfile .vimrc
-installfile .screenrc
+function installfileinfolder {
+if [ "$#" == 2 ]
+then
+    if [ ! -d "$HOME/$1" ] && [ -e "$SCRIPTPATH/$1" ]
+    then
+        mkdir "$1"
+    fi
+    installfile "$1/$2"
+    #if [ ! -e "$HOME/$1/$2" ] && [ -e "$SCRIPTPATH/$1/$2" ]
+    #then
+        #ln -s "$SCRIPTPATH/$1/$2" "$HOME/$1/$2"
+        #echo "$1/$2 installed"
+    #fi
+fi
+}
+
+
+## Install all in Confs/ dir to home
+shopt -s dotglob
+for f in *
+do
+    if [ -f "$f" ] && [[ ! "$f" == install ]] && [[ ! "$f" == README.md ]]
+    then
+        installfile "$f"
+    fi
+done
+
+## Install scripts
+
+for i in Documents/Scripts/*
+do
+    if [ -f "$i" ]
+    then
+        file=$(basename "$i")
+        dir=$(dirname "$i")
+        installfileinfolder "$dir" "$file"
+    fi
+done

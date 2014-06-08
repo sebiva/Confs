@@ -1,0 +1,38 @@
+KeyStrRelease Alt_L
+KeyStrRelease g
+KeyStr i
+KeyStr v
+KeyStr a
+KeyStr r
+KeyStr s
+KeyStr s
+KeyStr o
+KeyStr n
+KeyStrPress period
+
+KeyStrRelease period
+KeyStr s
+KeyStr e
+KeyStr b
+KeyStr a
+KeyStr s
+KeyStr t
+KeyStr i
+KeyStr a
+KeyStr n
+KeyStrPress ISO_Level3_Shift
+KeyStrPress at
+
+KeyStrRelease at
+KeyStrRelease ISO_Level3_Shift
+KeyStr g
+KeyStr m
+KeyStr a
+KeyStr i
+KeyStr l
+KeyStrPress period
+
+KeyStrRelease period
+KeyStr c
+KeyStr o
+KeyStr m

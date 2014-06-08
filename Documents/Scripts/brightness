@@ -1,0 +1,7 @@
+#!/bin/sh
+i=1
+while [ $i -ne 15 ]
+do
+xdotool key XF86MonBrightnessDown
+i=$(( $i + 1 ))
+done

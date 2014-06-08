@@ -1,0 +1,3 @@
+#!/bin/sh
+
+gksudo rmmod rtl8192se
