@@ -1,0 +1,35 @@
+#!/bin/bash
+
+SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
+
+echo "Installing config files from $SCRIPTPATH to $HOME"
+
+#Takes the file to install as an argument
+function installfile {
+if [ $# == 1 ]
+then
+    if [ ! -e $HOME/$1 ] && [ -e $SCRIPTPATH/$1 ]
+    then 
+        ln -s $SCRIPTPATH/$1 $HOME/$1
+        echo "$1 installed"
+    fi
+fi
+}
+
+installfile .emacs
+installfile .zshrc
+installfile .zsh_history
+installfile .bash_profile
+installfile .bashrc
+installfile .bash_history
+installfile .bashcolor
+installfile .bash_logout
+installfile .gitconfig
+installfile .git-prompt.sh
+installfile .aspell.en.prepl
+installfile .aspell.en.pws
+installfile .aspell.sv.prepl
+installfile .aspell.sv.pws
+installfile .profile
+installfile .vimrc
+installfile .screenrc
