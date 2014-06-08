@@ -28,17 +28,28 @@ if [ "$#" == 2 ]
 then
     if [ ! -d "$HOME/$1" ] && [ -e "$SCRIPTPATH/$1" ]
     then
-        mkdir "$1"
+        mkdir -p "$1"
     fi
     installfile "$1/$2"
-    #if [ ! -e "$HOME/$1/$2" ] && [ -e "$SCRIPTPATH/$1/$2" ]
-    #then
-        #ln -s "$SCRIPTPATH/$1/$2" "$HOME/$1/$2"
-        #echo "$1/$2 installed"
-    #fi
 fi
 }
 
+function installallinfolder {
+if [ "$#" == 1 ]
+then
+    pth="$1/*"
+    for i in $pth
+    do
+        if [ -f "$i" ]
+        then
+            file=$(basename "$i")
+            dir=$(dirname "$i")
+            installfileinfolder "$dir" "$file"
+        fi
+    done
+fi
+
+}
 
 ## Install all in Confs/ dir to home
 shopt -s dotglob
@@ -52,12 +63,6 @@ done
 
 ## Install scripts
 
-for i in Documents/Scripts/*
-do
-    if [ -f "$i" ]
-    then
-        file=$(basename "$i")
-        dir=$(dirname "$i")
-        installfileinfolder "$dir" "$file"
-    fi
-done
+installallinfolder "Documents/Scripts"
+installallinfolder "Documents/Scripts/ctrl"
+installallinfolder "Documents/Scripts/internet"
