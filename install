@@ -25,6 +25,7 @@ installfile .bash_history
 installfile .bashcolor
 installfile .bash_logout
 installfile .gitconfig
+installfile .git-credentials
 installfile .git-prompt.sh
 installfile .aspell.en.prepl
 installfile .aspell.en.pws
