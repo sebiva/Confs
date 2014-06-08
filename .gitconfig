@@ -3,3 +3,5 @@
 [user]
 	email = ivarsson.sebasitan@gmail.com
 	name = Sebastian Ivarsson
+[push]
+	default = simple
