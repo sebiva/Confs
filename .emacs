@@ -179,12 +179,12 @@
 
 
 
-(require 'auto-complete)
-(require 'yasnippet)
-(require 'irony) ;Note: hit `C-c C-b' to open build menu
+;;(require 'auto-complete)
+;;(require 'yasnippet)
+;;(require 'irony) ;Note: hit `C-c C-b' to open build menu
 
 ;; the ac plugin will be activated in each buffer using irony-mode
-(irony-enable 'ac)             ; hit C-RET to trigger completion
+;;(irony-enable 'ac)             ; hit C-RET to trigger completion
 
 (defun my-c++-hooks ()
   "Enable the hooks in the preferred order: 'yas -> auto-complete -> irony'."
