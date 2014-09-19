@@ -31,6 +31,8 @@ then
         fi
         ln -s "$SCRIPTPATH/$1" "$HOME/$1"
         echo "$msg"
+    else
+	    echo "not installed: $1"
     fi
 fi
 }
@@ -70,6 +72,8 @@ do
     if [ -f "$f" ] && [[ ! "$f" == install ]] && [[ ! "$f" == README.md ]]
     then
         installfile "$f"
+    else
+	    echo "not installing $f"
     fi
 done
 
