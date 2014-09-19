@@ -1,5 +1,17 @@
 #!/bin/bash
 
+
+
+# Tmux Plugin Manager
+ 
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]
+then
+    echo "Installing tmux plugin manager"
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    tmux source-file ~/.tmux.conf
+fi
+
+
 SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
 
 echo "Installing config files from $SCRIPTPATH to $HOME"
