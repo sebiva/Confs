@@ -31,11 +31,14 @@ vmap K 5k
 " Fix vims horrible (default) regexhandling =====================
 nnoremap / /\v
 vnoremap / /\v
+
 " Handle long lines (correctly
-set wrap
+"set wrap
 set textwidth=85
-set formatoptions=qrn1
-set colorcolumn=85
+set wrapmargin=0
+set formatoptions=cqt
+"set formatoptions=qrn1
+" set colorcolumn=85
 
 nnoremap <F3> :set hlsearch!<CR>
 " leaderfunctions
@@ -78,3 +81,13 @@ filetype indent on
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
+let g:Tex_CompileRule_pdf='pdflatex -interaction=nonstopmode $*'
+let g:Tex_DefaultTargetFormat='pdf'
+
+
+
+" Relative numbering
+set relativenumber
+set lazyredraw
+set ruler
+set nrformats=
