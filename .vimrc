@@ -38,7 +38,7 @@ filetype plugin indent on    " required
 
 " Begin conf
 
-execute pathogen#infect()
+"execute pathogen#infect()
 filetype plugin on
 set invhlsearch					      " Inversesearch			
 set number                          " Set linenumber
@@ -71,11 +71,14 @@ vmap K 5k
 " Fix vims horrible (default) regexhandling =====================
 nnoremap / /\v
 vnoremap / /\v
+
 " Handle long lines (correctly
-set wrap
+"set wrap
 set textwidth=85
-set formatoptions=qrn1
-set colorcolumn=85
+set wrapmargin=0
+set formatoptions=cqt
+"set formatoptions=qrn1
+" set colorcolumn=85
 
 nnoremap <F3> :set hlsearch!<CR>
 " leaderfunctions
@@ -89,3 +92,46 @@ nmap <Leader>p "+p
 nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
+
+
+
+" Hoppa ur search
+:nnoremap <cr> :nohlsearch<cr>
+
+
+" Latex
+
+
+" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+filetype plugin on
+
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+set shellslash
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=gssrep\ -nH\ $*
+
+" OPTIONAL: This enables automatic indentation as you type.
+filetype indent on
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+let g:Tex_CompileRule_pdf='pdflatex -interaction=nonstopmode $*'
+let g:Tex_DefaultTargetFormat='pdf'
+
+
+
+" Relative numbering
+set relativenumber
+set lazyredraw
+set ruler
+set nrformats=
+
+
+" Clipboard, p och y går till x clipboard
+set clipboard=unnamedplus

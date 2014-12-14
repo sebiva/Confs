@@ -1,7 +1,7 @@
 [credential]
 	helper = cache
 [user]
-	email = ivarsson.sebasitan@gmail.com
+	email = ivarsson.sebastian@gmail.com
 	name = Sebastian Ivarsson
 [push]
 	default = simple
