@@ -91,3 +91,7 @@ set relativenumber
 set lazyredraw
 set ruler
 set nrformats=
+
+
+" Clipboard, p och y går till x clipboard
+set clipboard=unnamedplus
