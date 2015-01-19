@@ -33,13 +33,13 @@ nnoremap / /\v
 vnoremap / /\v
 
 " Handle long lines (correctly
-"set wrap
-set textwidth=85
-set wrapmargin=0
+set wrap
+"set nowrap
+set textwidth=0
+"set wrapmargin=0
 set formatoptions=cqt
 "set formatoptions=qrn1
 " set colorcolumn=85
-
 nnoremap <F3> :set hlsearch!<CR>
 " leaderfunctions
 noremap <Leader>[ a<C-o>b[<C-o>e<C-o>l]<Esc>
