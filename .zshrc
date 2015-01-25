@@ -9,7 +9,7 @@ ZSHDDIR="${HOME}/.config/zsh.d"
 HISTFILE="${ZDOTDIR}/.zsh_history"
 HISTSIZE='10000'
 SAVEHIST="${HISTSIZE}"
-export EDITOR="/usr/bin/emacs"
+export EDITOR="/usr/bin/vim"
 export TMP="$HOME/tmp"
 export TEMP="$TMP"
 export TMPDIR="$TMP"
@@ -484,5 +484,8 @@ bindkey "^S" history-incremental-pattern-search-forward
 
 if [ -f ~/.alert ]; then echo '>>> Check ~/.alert'; fi
 
+
+# Cabal
+export PATH=$PATH:/home/or3x/.cabal/bin/
 
 unset SSH_ASKPASS
