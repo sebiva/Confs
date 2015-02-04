@@ -9,6 +9,7 @@ ZSHDDIR="${HOME}/.config/zsh.d"
 HISTFILE="${ZDOTDIR}/.zsh_history"
 HISTSIZE='10000'
 SAVEHIST="${HISTSIZE}"
+THEME="duellj"
 export EDITOR="/usr/bin/vim"
 export TMP="$HOME/tmp"
 export TEMP="$TMP"
@@ -489,3 +490,11 @@ if [ -f ~/.alert ]; then echo '>>> Check ~/.alert'; fi
 export PATH=$PATH:/home/or3x/.cabal/bin/
 
 unset SSH_ASKPASS
+
+# Vim mode, get back some ctrl - shortcuts
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^r' history-incremental-search-backward
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+
