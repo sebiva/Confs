@@ -1,70 +1,13 @@
-" Vundle
-
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
-" Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-"Plugin 'user/L9', {'name': 'newL9'}
-
-" Pane navigation
-Bundle 'christoomey/vim-tmux-navigator'
-" Commenting
-Plugin 'scrooloose/nerdcommenter'
-" Statusline
-Plugin 'bling/vim-airline'
-" Theme
-Plugin 'ajh17/Spacegray.vim'
-" Highlight whitespace
-Bundle 'ntpeters/vim-better-whitespace'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-
-
-"execute pathogen#infect()
 filetype plugin on
 set invhlsearch					      " Inversesearch
 set number                          " Set linenumber
-set shiftwidth=4                    " Indentation
-set tabstop=4                       " One tab == 3 spaces
+set shiftwidth=2                    " Indentation
+set tabstop=2                       " One tab == 1? spaces
 set smartindent                     " Set smartindent
 set expandtab                       " All spaces as tabs
-set softtabstop=4                   " Make backspace work on 'tabs'
+set softtabstop=2                   " Make backspace work on 'tabs'
 set ruler                           " Infobar at bottom
 set modelines=0                     " Disable modelines
 set undofile                        " Activate undofile
@@ -89,10 +32,10 @@ vnoremap <tab> %
 noremap k gk
 noremap j gj
 " Shift +j/k for moving around quickly ===============================
-nmap J 5j
-nmap K 5k
-vmap J 5j
-vmap K 5k
+"nmap J 5j
+"nmap K 5k
+"vmap J 5j
+"vmap K 5k
 " Fix vims horrible (default) regexhandling =====================
 nnoremap / /\v
 vnoremap / /\v
@@ -111,20 +54,19 @@ noremap <Leader>[ a<C-o>b[<C-o>e<C-o>l]<Esc>
 noremap <Leader>( a<C-o>b(<C-o>e<C-o>l)<Esc>
 noremap <Leader>< a<C-o>b<<C-o>e<C-o>l><Esc>
 noremap <Leader>" a<C-o>b"<C-o>e<C-o>l"<Esc>
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
+"vmap <Leader>y "+y
+"vmap <Leader>d "+d
+"nmap <Leader>p "+p
+"nmap <Leader>P "+P
+"vmap <Leader>p "+p
+"vmap <Leader>P "+P
 
 "Shortcuts for switching buffers
-
 set hidden
-map <C-N>   :bn<CR>
-imap <C-N>  <C-O>:bn<CR>
-map <C-P>   :bp<CR>
-imap <C-P>  <C-O>:bp<CR>
+map <Leader>n   :bn<CR>
+"imap <C-S>  <C-O>:bn<CR>
+map <Leader>p   :bp<CR>
+"imap <C-T>  <C-O>:bp<CR>
 
 " Quick split switch
 "nnoremap <C-J> <C-W><C-J>
@@ -176,9 +118,71 @@ set clipboard=unnamedplus
 
 " Airline
 set laststatus=2
-
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
-
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline_powerline_fonts = 1
+
+
+" CtrlP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.hi
+
+" Vundle
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Avoid a name conflict with L9
+"Plugin 'user/L9', {'name': 'newL9'}
+
+" Pane navigation
+Bundle 'christoomey/vim-tmux-navigator'
+" Commenting
+Plugin 'scrooloose/nerdcommenter'
+" Statusline
+Plugin 'bling/vim-airline'
+" Theme
+Plugin 'ajh17/Spacegray.vim'
+" Highlight whitespace
+Bundle 'ntpeters/vim-better-whitespace'
+" File finder
+Plugin 'kien/ctrlp.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+"execute pathogen#infect()
