@@ -6,6 +6,9 @@ export ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="jonathan"
+#source /home/or3x/tmp/ingenkopaisen/env/bin/activate
+#/home/or3x/tmp/ingenkopaisen/run.py
+#deactivate
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -117,7 +120,7 @@ export KEYTIMEOUT=1 # For the ESC delay
 # License: beerware.
 
 # Basic zsh config.
-umask 077
+umask 022
 ZDOTDIR=${ZDOTDIR:-${HOME}}
 ZSHDDIR="${HOME}/.config/zsh.d"
 HISTFILE="${ZDOTDIR}/.zsh_history"

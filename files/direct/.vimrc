@@ -12,6 +12,7 @@ set ruler                           " Infobar at bottom
 set modelines=0                     " Disable modelines
 set undofile                        " Activate undofile
 set gdefault                        " %s/LOL/HERP/ is now %s/LOL/HERP/g
+set cursorline                      " Line for the cursor
 colorscheme BenokaiPrime
 
 "if $COLORTERM == 'gnome-terminal'
@@ -113,9 +114,9 @@ set nrformats=
 
 
 " Clipboard, p och y går till x clipboard
-set clipboard=unnamedplus
-
-
+"set clipboard=unnamedplus
+" single characters are not written to a register when deleted
+noremap x "_x
 " Airline
 set laststatus=2
 " Enable the list of buffers
@@ -169,6 +170,8 @@ Plugin 'ajh17/Spacegray.vim'
 Bundle 'ntpeters/vim-better-whitespace'
 " File finder
 Plugin 'kien/ctrlp.vim'
+" Git stuff
+Plugin 'tpope/vim-fugitive'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

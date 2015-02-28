@@ -1,43 +1,32 @@
 #!/bin/bash
 
-
-
-# Tmux Plugin Manager
- 
-if [ ! -d "$HOME/.tmux/plugins/tpm" ] || [ ! -d "$HOME/.tmux/plugins/tmux-resurrect" ]
-then
-    echo "Installing tmux plugin manager"
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    git clone https://github.com/tmux-plugins/tmux-resurrect ~/.tmux/plugins/tmux-resurrect
-    tmux source-file ~/.tmux.conf
-fi
-
-
-SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
-
-echo "Installing config files from $SCRIPTPATH to $HOME"
-
-#Takes the file to install as an argument
+#Takes the file to install (to $HOME) and its path
 function installfile {
-if [ "$#" == 1 ]
+if [ "$#" == 2 ]
 then
-    if { [ ! -e "$HOME/$1" ] || [ -L "$HOME/$1" ]; } && [ -e "$SCRIPTPATH/$1" ]
-    then 
-        if [ -L "$HOME/$1" ]
-        then
-            rm "$HOME/$1"
-            msg="$1 updated"
-        else
-            msg="$1 installed"
-        fi
-        ln -s "$SCRIPTPATH/$1" "$HOME/$1"
-        echo "$msg"
+  if [ -e "$1/$2" ]
+  then
+    #if { [ ! -e "$HOME/$2" ] || [ -L "$HOME/$2" ]; } && [ -e "$1/$2" ]
+    if [ -L "$HOME/$2" ]
+    then
+      rm "$HOME/$2"
+      ln -s "$1/$2" "$HOME/$2"
+      echo "updated $2"
     else
-	    echo "not installed: $1"
+      if [ ! -e "$HOME/$2" ]
+      then
+        ln -s "$1/$2" "$HOME/$2"
+        echo "installed $2"
+      else
+        echo "Already exists: $HOME/$2"
+      fi
     fi
+  else
+    echo "Source $1/$2 not found"
+  fi
 fi
 }
-
+# Takes the path relative to $SCRIPTPATH and the filename
 function installfileinfolder {
 if [ "$#" == 2 ]
 then
@@ -45,10 +34,10 @@ then
     then
         mkdir -p "$1"
     fi
-    installfile "$1/$2"
+    installfile "$1" "$2"
 fi
 }
-
+# Takes the path relative to $SCRIPTPATH
 function installallinfolder {
 if [ "$#" == 1 ]
 then
@@ -66,20 +55,64 @@ fi
 
 }
 
-## Install all in Confs/ dir to home
-shopt -s dotglob
-for f in *
+
+# Tmux Plugin Manager
+if [ ! -d "$HOME/.tmux/plugins/tpm" ] # || [ ! -d "$HOME/.tmux/plugins/tmux-resurrect" ]
+then
+    echo "Installing tmux plugin manager"
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    #git clone https://github.com/tmux-plugins/tmux-resurrect ~/.tmux/plugins/tmux-resurrect
+    tmux source-file ~/.tmux.conf
+fi
+
+# Install dotfiles directly to $HOME
+SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
+
+echo "Installing config files from $SCRIPTPATH to $HOME"
+shopt -s dotglob # List . files too
+echo $SCRIPTPATH/files
+DIRECTFILES=$(ls -A $SCRIPTPATH/files/direct)
+
+
+for f in $DIRECTFILES
 do
-    if [ -f "$f" ] && [[ ! "$f" == install ]] && [[ ! "$f" == README.md ]]
-    then
-        installfile "$f"
-    else
-	    echo "not installing $f"
-    fi
+  installfile "$SCRIPTPATH/files/direct" "$f"
 done
+
+### Vim
+# colors
+cp "$SCRIPTPATH/files/.vim/colors/BenokaiPrime.vim" "$HOME/"
+# vundle
+git "clone https://github.com/gmarik/Vundle.vim.git" "$HOME/.vim/bundle/Vundle.vim"
+vim +PluginInstall +qall
+# Vim-latex
+mkdir tmp
+git clone https://github.com/vim-latex/vim-latex tmp/
+cd tmp; make; cd ..
+rm -rf tmp
+echo "Vim installed"
+
+### ZSH
+mv "$HOME/.zshrc" "$HOME/.bakzshrc"
+# oh-my-zsh
+mkdir tmp
+git clone https://github.com/robbyrussell/oh-my-zsh.git tmp/
+tmp/tools/install.sh
+rm -rf tmp
+
+# stub
+cp "files/.zshrc-stub" "$HOME/.zshrc"
+echo "Zsh installed"
 
 ## Install scripts
 
-installallinfolder "Documents/Scripts"
-installallinfolder "Documents/Scripts/ctrl"
-installallinfolder "Documents/Scripts/internet"
+if [ ! -d "$HOME/Dropbox" ]
+then
+  mkdir "$HOME/Documents/Scripts"
+  mkdir "$HOME/Documents/Scripts/ctrl"
+  mkdir "$HOME/Documents/Scripts/internet"
+  installallinfolder "$HOME/Documents/Scripts"
+  installallinfolder "$HOME/Documents/Scripts/ctrl"
+  installallinfolder "$HOME/Documents/Scripts/internet"
+  echo "Scripts installed"
+fi
