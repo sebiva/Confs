@@ -1,3 +1,6 @@
+set shell=/bin/bash
+
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 filetype plugin on
@@ -20,6 +23,9 @@ colorscheme BenokaiPrime
 " For colors to work
 set t_Co=256
 "endif
+
+" escape
+inoremap jj <ESC>
 
 syntax on                           " Syntax highlighting
 let mapleader = ","                 " remap leaderkey
@@ -132,6 +138,30 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.hi
 
+" Syntactic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Fast tags
+" Unfortunately silent means the errors look a little ugly, I suppose I could
+" " capture those and print them out with echohl WarningMsg.
+"au BufWritePost *.hs silent !init-tags %
+"au BufWritePost *.hsc silent !init-tags %
+
+
+
+
+
+
+
+
+
 " Vundle
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -172,6 +202,14 @@ Bundle 'ntpeters/vim-better-whitespace'
 Plugin 'kien/ctrlp.vim'
 " Git stuff
 Plugin 'tpope/vim-fugitive'
+" Syntastic
+"Bundle 'scrooloose/syntastic'
+"Vimplugin for Haskell
+Plugin 'raichoo/haskell-vim'
+" vimproc
+Bundle 'Shougo/vimproc.vim'
+" GHC mod
+" Bundle 'eagletmt/ghcmod-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -189,3 +227,9 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 "execute pathogen#infect()
+"
+"" Jump to last cursor position unless it's invalid or in an event handler
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \  exe "normal g`\"" |
+  \ endif
