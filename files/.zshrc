@@ -52,7 +52,7 @@ plugins=(git)
 
 # User configuration
 
-export PATH="/home/or3x/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/or3x/Documents/Scripts:/home/or3x/.cabal/bin/"
+export PATH="$HOME/bin:$HOME/opt:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/Documents/Scripts:$HOME/.cabal/bin/"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
