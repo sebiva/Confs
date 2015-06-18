@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ -d $HOME/tmp_install ];
+then
+  echo "~/tmp_install already exists!"
+  exit 1
+fi
+
 #Takes the file to install (to $HOME) and its path
 function installfile {
 if [ "$#" == 2 ]
@@ -81,24 +87,36 @@ done
 
 ### Vim
 # colors
-cp "$SCRIPTPATH/files/.vim/colors/BenokaiPrime.vim" "$HOME/"
+if [ ! -d "$HOME/.vim/colors" ];
+then
+  mkdir -p "$HOME/.vim/colors"
+fi
+cp "$SCRIPTPATH/files/.vim/colors/BenokaiPrime.vim" "$HOME/.vim/colors"
 # vundle
-git "clone https://github.com/gmarik/Vundle.vim.git" "$HOME/.vim/bundle/Vundle.vim"
+if [ ! -d "$HOME/.vim/bundle" ];
+then
+  mkdir -p "$HOME/.vim/bundle"
+fi
+git clone "https://github.com/gmarik/Vundle.vim.git" "$HOME/.vim/bundle/Vundle.vim"
 vim +PluginInstall +qall
 # Vim-latex
-mkdir tmp
-git clone https://github.com/vim-latex/vim-latex tmp/
-cd tmp; make; cd ..
-rm -rf tmp
-echo "Vim installed"
+mkdir tmp_install
+git clone https://github.com/vim-latex/vim-latex tmp_install/vim-latex
+cd tmp_install; make; cd ..
+rm -rf tmp_install
+echo "Vim stuff installed"
 
 ### ZSH
 mv "$HOME/.zshrc" "$HOME/.bakzshrc"
 # oh-my-zsh
-mkdir tmp
-git clone https://github.com/robbyrussell/oh-my-zsh.git tmp/
-tmp/tools/install.sh
-rm -rf tmp
+if [ ! -f $HOME/.oh-my-zsh ];
+then
+  mkdir tmp_install
+  git clone https://github.com/robbyrussell/oh-my-zsh.git tmp_install/
+  tmp_install/tools/install.sh
+  rm -rf tmp_install
+fi
+
 
 # stub
 cp "files/.zshrc-stub" "$HOME/.zshrc"
