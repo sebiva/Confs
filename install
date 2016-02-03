@@ -97,7 +97,8 @@ if [ ! -d "$HOME/.vim/bundle" ];
 then
   mkdir -p "$HOME/.vim/bundle"
 fi
-git clone "https://github.com/gmarik/Vundle.vim.git" "$HOME/.vim/bundle/Vundle.vim"
+git clone "https://github.com/VundleVim/Vundle.vim.git" "$HOME/.vim/bundle/Vundle.vim"
+echo "If the git clone fails, either remove the line about ssh in the .gitconfig file, or generate a pub-key"
 vim +PluginInstall +qall
 # Vim-latex
 mkdir tmp_install
@@ -113,6 +114,7 @@ if [ ! -f $HOME/.oh-my-zsh ];
 then
   mkdir tmp_install
   git clone https://github.com/robbyrussell/oh-my-zsh.git tmp_install/
+  echo "Remember to exit the zsh shell after installing"
   tmp_install/tools/install.sh
   rm -rf tmp_install
 fi
@@ -121,6 +123,12 @@ fi
 # stub
 cp "files/.zshrc-stub" "$HOME/.zshrc"
 echo "Zsh installed"
+
+chsh -s /bin/zsh
+
+echo "-----------------------------------"
+echo "Logout/login needed to change shell"
+echo "-----------------------------------"
 
 ## Install scripts
 
