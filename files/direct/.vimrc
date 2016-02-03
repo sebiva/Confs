@@ -1,4 +1,4 @@
-set shell=/bin/bash
+set shell=/bin/zsh
 
 
 set nocompatible              " be iMproved, required
@@ -107,9 +107,14 @@ filetype indent on
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
-let g:Tex_CompileRule_pdf='pdflatex -interaction=nonstopmode $*'
+"let g:Tex_CompileRule_pdf='bibtex %:r & pdflatex -interaction=nonstopmode %:r & bibtex %:r & pdflatex -interaction=nonstopmode %:r'
+"let g:Tex_CompileRule_pdf='latexmk -pdf %:r && latexmk -c %:r'
+let g:Tex_CompileRule_pdf='latexmk -pdf -outdir=out/ -auxdir=out/ %:r'
 let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_MultipleCompileFormats='pdf,bib'
 
+" Undo some latex-suite macros
+let g:Imap_FreezeImap=1
 
 
 " Relative numbering
@@ -210,6 +215,18 @@ Plugin 'raichoo/haskell-vim'
 Bundle 'Shougo/vimproc.vim'
 " GHC mod
 " Bundle 'eagletmt/ghcmod-vim'
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+" Show git diff indicator in sidebar
+Plugin 'airblade/vim-gitgutter'
+" Center all text
+Plugin 'junegunn/goyo.vim'
+" Highligts the current paragraph
+Plugin 'junegunn/limelight.vim'
+" Thesaurus
+Plugin 'beloglazov/vim-online-thesaurus'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -233,3 +250,26 @@ autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
   \  exe "normal g`\"" |
   \ endif
+
+
+" Ultisnips
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"
+" " If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
+" Erlang stuff
+:set runtimepath^=$HOME/.vim_erlang_tags/vim-erlang-tags
+:set tags^=$HOME/Thesis/find-example/tags
+:set tags^=$HOME/Thesis/more-bugs/tags
+
+
+" Make vim save .un~ and .swp files in $TEMP instead:
+set backupdir=$TEMP//
+set directory=$TEMP//
+set undodir=$TEMP//

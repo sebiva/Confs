@@ -52,7 +52,7 @@ plugins=(git)
 
 # User configuration
 
-export PATH="$HOME/bin:$HOME/opt:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/Documents/Scripts:$HOME/.cabal/bin/"
+export PATH="$HOME/bin:$HOME/opt:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/Documents/Scripts:$HOME/.cabal/bin/:$HOME/.gem/ruby/2.3.0/bin/"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -94,6 +94,7 @@ alias ghci_m="ghci +RTS -M2048m"
 alias v="TERM=xterm vim"
 #alias vim="TERM=xterm vim"
 alias vrc="TERM=xterm vim ~/.vimrc"
+alias vcheat="TERM=xterm vim ~/.vcheat"
 
 
 # Vim mode, get back some ctrl - shortcuts

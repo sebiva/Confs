@@ -1,9 +1,17 @@
-;;erlang mode
-;;(setq load-path (cons  "/usr/local/otp/lib/tools-<ToolsVer>/emacs"
-;;      load-path))
-;;      (setq erlang-root-dir "/usr/local/otp")
-;;      (setq exec-path (cons "/usr/local/otp/bin" exec-path))
-;;      (require 'erlang-start)
+;; EQC Emacs Mode -- Configuration Start
+(add-to-list 'load-path "/usr/lib/erlang/lib/eqc-1.36.1/emacs/")
+(autoload 'eqc-erlang-mode-hook "eqc-ext" "EQC Mode" t)
+(add-hook 'erlang-mode-hook 'eqc-erlang-mode-hook)
+(setq eqc-max-menu-length 30)
+(setq eqc-root-dir "/usr/lib/erlang/lib/eqc-1.36.1")
+;; EQC Emacs Mode -- Configuration End
+
+;erlang mode
+(setq load-path (cons  "/usr/lib/erlang/lib/tools-2.8.2/emacs"
+      load-path))
+      (setq erlang-root-dir "/usr/lib/erlang")
+      (setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
+      (require 'erlang-start)
 
 ;;Remove menubar
 (menu-bar-mode -1)
@@ -213,5 +221,13 @@
 
 
 ;; Haskell
-(load "/usr/share/emacs/site-lisp/haskell-mode/haskell-mode.el")
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;(load "/usr/share/emacs/site-lisp/haskell-mode/haskell-mode.el")
+;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+
+;; EVIL
+
+(require 'package)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+  (package-initialize)
+  (require 'evil)
+  (evil-mode 1)
