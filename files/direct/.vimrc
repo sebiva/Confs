@@ -109,7 +109,14 @@ filetype indent on
 let g:tex_flavor='latex'
 "let g:Tex_CompileRule_pdf='bibtex %:r & pdflatex -interaction=nonstopmode %:r & bibtex %:r & pdflatex -interaction=nonstopmode %:r'
 "let g:Tex_CompileRule_pdf='latexmk -pdf %:r && latexmk -c %:r'
-let g:Tex_CompileRule_pdf='latexmk -pdf -outdir=out/ -auxdir=out/ %:r'
+" For the final report:
+
+if ! empty(matchstr(expand('%:p'), "/home/or3x/Dropbox/Documents/Chalmers-Kurser/Thesis/thesis-report/.*"))
+  let g:mainfile = expand(fnamemodify('main.tex', ':p'))
+  let g:Tex_CompileRule_pdf='cd .. && latexmk -pdf -outdir=out/ -auxdir=out/ ' . g:mainfile
+else
+  let g:Tex_CompileRule_pdf='latexmk -pdf -outdir=out/ -auxdir=out/ %:r'
+endif
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_MultipleCompileFormats='pdf,bib'
 
@@ -145,7 +152,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.hi
 
 " Syntactic
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
@@ -267,6 +274,8 @@ let g:UltiSnipsEditSplit="vertical"
 :set runtimepath^=$HOME/.vim_erlang_tags/vim-erlang-tags
 :set tags^=$HOME/Thesis/find-example/tags
 :set tags^=$HOME/Thesis/more-bugs/tags
+:set tags^=$HOME/Thesis/vbox-share/eqc-dev/tags
+:set tags^=$HOME/Thesis/vbox-share/eqc-dev/web/js/tags
 
 
 " Make vim save .un~ and .swp files in $TEMP instead:
