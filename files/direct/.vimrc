@@ -5,6 +5,7 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 filetype plugin on
 set invhlsearch					      " Inversesearch
+set hlsearch
 set number                          " Set linenumber
 set shiftwidth=2                    " Indentation
 set tabstop=2                       " One tab == 1? spaces
@@ -54,8 +55,9 @@ set textwidth=0
 "set wrapmargin=0
 set formatoptions=cqt
 "set formatoptions=qrn1
-" set colorcolumn=85
+set colorcolumn=80
 nnoremap <F3> :set hlsearch!<CR>
+nnoremap <F6> :set paste!<CR>
 " leaderfunctions
 noremap <Leader>[ a<C-o>b[<C-o>e<C-o>l]<Esc>
 noremap <Leader>( a<C-o>b(<C-o>e<C-o>l)<Esc>
@@ -109,11 +111,19 @@ filetype indent on
 let g:tex_flavor='latex'
 "let g:Tex_CompileRule_pdf='bibtex %:r & pdflatex -interaction=nonstopmode %:r & bibtex %:r & pdflatex -interaction=nonstopmode %:r'
 "let g:Tex_CompileRule_pdf='latexmk -pdf %:r && latexmk -c %:r'
-" For the final report:
 
+" Don't open log files automatically
+let g:Tex_GotoError=0
+
+" For the final report:
 if ! empty(matchstr(expand('%:p'), "/home/or3x/Dropbox/Documents/Chalmers-Kurser/Thesis/thesis-report/.*"))
   let g:mainfile = expand(fnamemodify('main.tex', ':p'))
-  let g:Tex_CompileRule_pdf='cd .. && latexmk -pdf -outdir=out/ -auxdir=out/ ' . g:mainfile
+  let g:Tex_CompileRule_pdf='cd .. && latexmk -pdf -outdir=out/ -auxdir=out/ -pdflatex="pdflatex -shell-escape" ' . g:mainfile
+elseif ! empty(matchstr(expand('%:p'), "/home/or3x/Dropbox/Documents/Chalmers-Kurser/Thesis/thesis-presentation/.*"))
+  let g:mainfile = expand(fnamemodify('main.tex', ':p'))
+  "let g:Tex_CompileRule_pdf='latexmk -pdf -outdir=out/ -auxdir=out/ -pdflatex="pdflatex -shell-escape" ' . g:mainfile
+  let g:Tex_CompileRule_pdf='latexmk -pdf -outdir=out/ -auxdir=out/ -pdflatex="pdflatex -shell-escape" main.tex'
+  let g:Tex_CompileRule_pdf='pdflatex -output-directory=out/ -shell-escape main.tex'
 else
   let g:Tex_CompileRule_pdf='latexmk -pdf -outdir=out/ -auxdir=out/ %:r'
 endif
@@ -282,3 +292,10 @@ let g:UltiSnipsEditSplit="vertical"
 set backupdir=$TEMP//
 set directory=$TEMP//
 set undodir=$TEMP//
+
+nnoremap <F7> :GitGutterStageHunk<CR>
+nnoremap <F8> :GitGutterPreviewHunk<CR>
+nnoremap <F9> :GitGutterPrevHunk<CR>
+nnoremap <F10> :GitGutterNextHunk<CR>
+nnoremap <F12> :GitGutterRevertHunk<CR>
+
