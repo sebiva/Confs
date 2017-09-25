@@ -7,11 +7,11 @@ filetype plugin on
 set invhlsearch					      " Inversesearch
 set hlsearch
 set number                          " Set linenumber
-set shiftwidth=2                    " Indentation
-set tabstop=2                       " One tab == 1? spaces
+set shiftwidth=4                    " Indentation
+set tabstop=4                       " One tab == 1? spaces
 set smartindent                     " Set smartindent
 set expandtab                       " All spaces as tabs
-set softtabstop=2                   " Make backspace work on 'tabs'
+set softtabstop=4                   " Make backspace work on 'tabs'
 set ruler                           " Infobar at bottom
 set modelines=0                     " Disable modelines
 set undofile                        " Activate undofile
@@ -289,9 +289,9 @@ let g:UltiSnipsEditSplit="vertical"
 
 
 " Make vim save .un~ and .swp files in $TEMP instead:
-set backupdir=$TEMP//
-set directory=$TEMP//
-set undodir=$TEMP//
+"set backupdir=$HOME/.tmp//
+"set directory=$HOME/.tmp//
+"set undodir=$HOME/.tmp//
 
 nnoremap <F7> :GitGutterStageHunk<CR>
 nnoremap <F8> :GitGutterPreviewHunk<CR>
@@ -299,3 +299,8 @@ nnoremap <F9> :GitGutterPrevHunk<CR>
 nnoremap <F10> :GitGutterNextHunk<CR>
 nnoremap <F12> :GitGutterRevertHunk<CR>
 
+" Make # comments in python stay indented
+autocmd BufRead *.py inoremap # X<c-h>#
+
+" tags
+set tags=./tags;
