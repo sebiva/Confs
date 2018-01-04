@@ -1,3 +1,4 @@
+Must follow https://github.com/powerline/fonts instructions for correct fonts
 .vim/colors/BenokaiPrime must be copied manually
 .zshrc-stub must be copied manually, then all settings are actually in ~/Confs/.zshrc
 
