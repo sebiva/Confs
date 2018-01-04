@@ -61,6 +61,7 @@ nnoremap <F6> :set paste!<CR>
 " leaderfunctions
 noremap <Leader>[ a<C-o>b[<C-o>e<C-o>l]<Esc>
 noremap <Leader>( a<C-o>b(<C-o>e<C-o>l)<Esc>
+noremap <Leader>{ a<C-o>b{<C-o>e<C-o>l}<Esc>
 noremap <Leader>< a<C-o>b<<C-o>e<C-o>l><Esc>
 noremap <Leader>" a<C-o>b"<C-o>e<C-o>l"<Esc>
 "vmap <Leader>y "+y
@@ -84,7 +85,7 @@ map <Leader>p   :bp<CR>
 "nnoremap <C-H> <C-W><C-H>
 
 " Hoppa ur search
-:nnoremap <cr> :nohlsearch<cr>
+:nnoremap <Leader><cr> :nohlsearch<cr>
 
 
 " Latex
@@ -142,7 +143,7 @@ set nrformats=
 
 
 " Clipboard, p och y går till x clipboard
-"set clipboard=unnamedplus
+set clipboard=unnamedplus
 " single characters are not written to a register when deleted
 noremap x "_x
 " Airline
@@ -158,17 +159,19 @@ let g:airline_powerline_fonts = 1
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.hi
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.hi,*.beam
+" Bufexplorer
+map <silent> <C-b> :call ToggleBufExplorer()<CR>
 
 " Syntactic
 set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
 " Fast tags
 " Unfortunately silent means the errors look a little ugly, I suppose I could
@@ -176,6 +179,23 @@ let g:syntastic_check_on_wq = 0
 "au BufWritePost *.hs silent !init-tags %
 "au BufWritePost *.hsc silent !init-tags %
 
+" Automatically open, but do not go to (if there are errors) the quickfix /
+" location list window, or close it when is has become empty.
+"
+" Note: Must allow nesting of autocmds to enable any customizations for quickfix
+" buffers.
+" Note: Normally, :cwindow jumps to the quickfix window if the command opens it
+" (but not if it's already open). However, as part of the autocmd, this doesn't
+" seem to happen.
+" Usage:
+" :cc      see the current error
+" :cn      next error
+" :cp      previous error
+" :clist   list all errors
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+"""
 
 
 
@@ -222,12 +242,14 @@ Plugin 'ajh17/Spacegray.vim'
 Bundle 'ntpeters/vim-better-whitespace'
 " File finder
 Plugin 'kien/ctrlp.vim'
+" Buffer list
+Plugin 'jlanzarotta/bufexplorer'
 " Git stuff
 Plugin 'tpope/vim-fugitive'
 " Syntastic
 "Bundle 'scrooloose/syntastic'
 "Vimplugin for Haskell
-Plugin 'raichoo/haskell-vim'
+"Plugin 'raichoo/haskell-vim'
 " vimproc
 Bundle 'Shougo/vimproc.vim'
 " GHC mod
@@ -244,6 +266,18 @@ Plugin 'junegunn/goyo.vim'
 Plugin 'junegunn/limelight.vim'
 " Thesaurus
 Plugin 'beloglazov/vim-online-thesaurus'
+" Nerdtree
+Plugin 'scrooloose/nerdtree'
+" Erlang tags
+Plugin 'vim-erlang/vim-erlang-tags'
+" Erlang compilation
+Plugin 'vim-erlang/vim-erlang-compiler'
+" Erlang skeletons
+Plugin 'vim-erlang/vim-erlang-skeletons'
+" Argumentative, moving args in ,-separated lists
+Plugin 'PeterRincker/vim-argumentative'
+" Repeat plugin-commands with . (dot)
+Plugin 'tpope/vim-repeat'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -281,11 +315,7 @@ let g:UltiSnipsEditSplit="vertical"
 
 
 " Erlang stuff
-:set runtimepath^=$HOME/.vim_erlang_tags/vim-erlang-tags
-:set tags^=$HOME/Thesis/find-example/tags
-:set tags^=$HOME/Thesis/more-bugs/tags
-:set tags^=$HOME/Thesis/vbox-share/eqc-dev/tags
-:set tags^=$HOME/Thesis/vbox-share/eqc-dev/web/js/tags
+:set runtimepath^=$HOME/.vim/plugin/
 
 
 " Make vim save .un~ and .swp files in $TEMP instead:
@@ -303,4 +333,7 @@ nnoremap <F12> :GitGutterRevertHunk<CR>
 autocmd BufRead *.py inoremap # X<c-h>#
 
 " tags
-set tags=./tags;
+"set tags=./tags;
+
+" Nerdtree file browser
+map <C-s> :NERDTreeToggle<CR>
