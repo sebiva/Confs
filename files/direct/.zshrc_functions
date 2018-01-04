@@ -1,0 +1,87 @@
+escape_string() {
+# Uber useful when you need to translate weird as fuck path into single-argument string.
+local escape_string_input
+echo -n "String to escape: "
+read escape_string_input
+_escaped_string="$(printf '%q' "$escape_string_input")"
+if [ "$1" = '-o' ]; then
+echo
+echo "${_escaped_string}"
+echo
+else
+export _escaped_string
+echo "Escaped string has been pushed to \${_escaped_string} variable." 1>&2
+fi
+}
+
+confirm() {
+local answer
+echo -ne "zsh: sure you want to run '${YELLOW}$@${NC}' [yN]? "
+read -q answer
+echo
+if [[ "${answer}" =~ ^[Yy]$ ]]; then
+command "${=1}" "${=@:2}"
+else
+return 1
+fi
+}
+
+confirm_wrapper() {
+if [ "$1" = '--root' ]; then
+local as_root='true'
+shift
+fi
+
+local runcommand="$1"; shift
+
+if [ "${as_root}" = 'true' ] && [ "${USER}" != 'root' ]; then
+runcommand="sudo ${runcommand}"
+fi
+confirm "${runcommand}" "$@"
+}
+
+poweroff() { confirm_wrapper --root $0 "$@"; }
+reboot() { confirm_wrapper --root $0 "$@"; }
+hibernate() { confirm_wrapper --root $0 "$@"; }
+
+detox() {
+if [ "$#" -ge 1 ]; then
+confirm detox "$@"
+else
+command detox "$@"
+fi
+}
+
+has() {
+local string="${1}"
+shift
+local element=''
+for element in "$@"; do
+if [ "${string}" = "${element}" ]; then
+return 0
+fi
+done
+return 1
+}
+
+begin_with() {
+local string="${1}"
+shift
+local element=''
+for element in "$@"; do
+if [[ "${string}" =~ "^${element}" ]]; then
+return 0
+fi
+done
+return 1
+
+}
+man() {
+if command -v vimmanpager >/dev/null 2>&1; then
+PAGER="vimmanpager" command man "$@"
+else
+command man "$@"
+fi
+}
+
+
