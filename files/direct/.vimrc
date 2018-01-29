@@ -77,8 +77,8 @@ autocmd QuickFixCmdPost    l* nested lwindow
 " Extra escape
 inoremap jj <ESC>
 " Shortcuts to go to EOL/Beginning of line ===============================
-map  <C-E>      $
-imap <C-E>      <C-O>$
+noremap  <C-E>      $
+inoremap <C-E>      <C-O>$
 " Make bracketmatching with tab
 nnoremap <tab> %
 vnoremap <tab> %
@@ -92,7 +92,7 @@ vnoremap / /\v
 nnoremap <F3> :set hlsearch!<CR>
 nnoremap <F6> :set paste!<CR>
 " Exit hlsearch
-:nnoremap <Leader><cr> :nohlsearch<cr>
+nnoremap <Leader><cr> :nohlsearch<cr>
 " Leaderfunctions for adding [](){}<>"" ==================================
 noremap <Leader>[ a<C-o>b[<C-o>e<C-o>l]<Esc>
 noremap <Leader>( a<C-o>b(<C-o>e<C-o>l)<Esc>
@@ -102,11 +102,20 @@ noremap <Leader>" a<C-o>b"<C-o>e<C-o>l"<Esc>
 
 " Shortcuts for switching buffers ========================================
 set hidden
-map <Leader>n   :bn<CR>
-map <Leader>p   :bp<CR>
+noremap <Leader>n   :bn<CR>
+noremap <Leader>p   :bp<CR>
 
 " single characters are not written to a register when deleted
 noremap x "_x
+" Move lines down with '-' and up with '_'
+noremap - ddp
+noremap _ ddkP
+" Uppercase with <c-u>
+inoremap <c-u> <esc>viwUea
+nnoremap <c-u> viwU
+" Open vimrc in split, source vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " ========================================================================
 " Vundle =================================================================
@@ -204,7 +213,7 @@ let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.hi,*.beam
 
 " Bufexplorer ============================================================
-map <silent> <C-b> :call ToggleBufExplorer()<CR>
+noremap <silent> <C-b> :call ToggleBufExplorer()<CR>
 
 " Ultisnips ==============================================================
 " Trigger configuration. Do not use <tab> if you use
@@ -219,7 +228,7 @@ let g:UltiSnipsEditSplit="vertical"
 :set runtimepath^=$HOME/.vim/plugin/
 
 " Nerdtree file browser ==================================================
-map <C-s> :NERDTreeToggle<CR>
+noremap <C-s> :NERDTreeToggle<CR>
 
 " GitGutter ==============================================================
 nnoremap <F7> :GitGutterStageHunk<CR>
