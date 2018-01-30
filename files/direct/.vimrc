@@ -32,6 +32,7 @@ set lazyredraw
 set ruler                       " Ruler line
 set nrformats=
 set clipboard=unnamedplus       " Clipboard, p and y go to X-clipboard
+set switchbuf="useopen"         " Open buffers in the current tab, not in other
 
 " Statusline
 " TODO: Should this be together with airline settings?
@@ -100,10 +101,14 @@ noremap <Leader>{ a<C-o>b{<C-o>e<C-o>l}<Esc>
 noremap <Leader>< a<C-o>b<<C-o>e<C-o>l><Esc>
 noremap <Leader>" a<C-o>b"<C-o>e<C-o>l"<Esc>
 
-" Shortcuts for switching buffers ========================================
+" Shortcuts for switching buffers and tabs ===============================
 set hidden
 noremap <Leader>n   :bn<CR>
 noremap <Leader>p   :bp<CR>
+" Last edited buffer
+noremap <Leader>l   :b#<CR>
+noremap <Leader>N   :tabn<CR>
+noremap <Leader>P   :tabp<CR>
 
 " single characters are not written to a register when deleted
 noremap x "_x
@@ -205,15 +210,23 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_close_button = 0
 
 " CtrlP ==================================================================
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_regexp = 1
 let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.hi,*.beam
 
 " Bufexplorer ============================================================
 noremap <silent> <C-b> :call ToggleBufExplorer()<CR>
+let g:bufExplorerFindActive=0        " Do not go to active window when opening
+let g:bufExplorerShowTabBuffer=1        " Yes.
+let g:bufExplorerSortBy='name'       " Sort by the buffer's name.
 
 " Ultisnips ==============================================================
 " Trigger configuration. Do not use <tab> if you use
