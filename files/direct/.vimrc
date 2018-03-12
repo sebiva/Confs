@@ -33,6 +33,9 @@ set ruler                       " Ruler line
 set nrformats=
 set clipboard=unnamedplus       " Clipboard, p and y go to X-clipboard
 set switchbuf="useopen"         " Open buffers in the current tab, not in other
+set autoread                    " Don't ask to load changed files (when changed
+                                " in git for example), unless there are unsaved
+                                " changes in the buffer.
 
 " Statusline
 " TODO: Should this be together with airline settings?
@@ -41,12 +44,6 @@ set statusline+=%*
 
 " Make # comments in python stay indented
 autocmd BufRead *.py inoremap # X<c-h>#
-
-" Jump to last cursor position unless it's invalid or in an event handler
-autocmd BufReadPost *
-  \ if line("'\"") > 0 && line("'\"") <= line("$") |
-  \  exe "normal g`\"" |
-  \ endif
 
 " Automatically open, but do not go to (if there are errors) the quickfix /
 " location list window, or close it when is has become empty.
@@ -115,9 +112,9 @@ noremap x "_x
 " Move lines down with '-' and up with '_'
 noremap - ddp
 noremap _ ddkP
-" Uppercase with <c-u>
-inoremap <c-u> <esc>viwUea
-nnoremap <c-u> viwU
+" Uppercase with <c-u> - conflits with scroll up, need other shortcut
+"inoremap <c-u> <esc>viwUea
+"nnoremap <c-u> viwU
 " Open vimrc in split, source vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -181,6 +178,8 @@ Plugin 'junegunn/limelight.vim'
 Plugin 'beloglazov/vim-online-thesaurus'
 " Nerdtree
 Plugin 'scrooloose/nerdtree'
+" Async make  (needs vim 8 it seems)
+Plugin 'neomake/neomake'
 " Erlang tags
 Plugin 'vim-erlang/vim-erlang-tags'
 " Erlang compilation
@@ -191,6 +190,8 @@ Plugin 'vim-erlang/vim-erlang-skeletons'
 Plugin 'PeterRincker/vim-argumentative'
 " Repeat plugin-commands with . (dot)
 Plugin 'tpope/vim-repeat'
+" Make vim remember where the cursor was
+Plugin 'farmergreg/vim-lastplace'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -239,6 +240,37 @@ let g:UltiSnipsEditSplit="vertical"
 
 " Erlang stuff ===========================================================
 :set runtimepath^=$HOME/.vim/plugin/
+let g:erlang_show_errors=0
+let g:erlang_make_options = '--nooutdir'
+let g:erlang_flymake_options = '--nooutdir'
+
+" Currently not used
+function! s:flycheck_postprocess(entry)
+    if a:entry.text =~ 'Warning: '
+        let a:entry.type = 'W'
+        let a:entry.text = substitute(a:entry.text, 'Warning: ', '', "g")
+    else
+        let a:entry.type = 'E'
+    endif
+endfunction
+
+let g:neomake_erlang_enabled_makers = ['flycheck']
+let g:neomake_erlang_flycheck_maker = {
+            \ 'exe': '/home/ezivase/.vim/bundle/vim-erlang-compiler/compiler/erlang_check.erl',
+            \ 'args': ['--nooutdir'],
+            \ 'errorformat': '%f:%l: %m,%f: %m',
+            \ 'postprocess': function('s:flycheck_postprocess')
+            \ }
+let g:neomake_open_list = 2
+noremap <Leader>c :Neomake<CR>
+autocmd BufWritePost * Neomake
+
+"noremap <silent> <Leader>c :ErlangEnableShowErrors :call erlang_compiler#AutoRun(expand("<abuf>")+0)<CR>
+"command! -nargs=1 Silent
+            "\   execute 'silent !' . <q-args>
+            "\ | execute 'redraw!'
+"noremap <silent> <Leader>c :make<CR> :redraw!<CR>
+"
 
 " Nerdtree file browser ==================================================
 noremap <C-s> :NERDTreeToggle<CR>
@@ -249,6 +281,8 @@ nnoremap <F8> :GitGutterPreviewHunk<CR>
 nnoremap <F9> :GitGutterPrevHunk<CR>
 nnoremap <F10> :GitGutterNextHunk<CR>
 nnoremap <F12> :GitGutterRevertHunk<CR>
+" Whitespace
+highlight ExtraWhitespace ctermbg=red
 
 " ========================================================================
 " Vundle END =============================================================
