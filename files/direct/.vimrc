@@ -73,7 +73,9 @@ autocmd QuickFixCmdPost    l* nested lwindow
 " ========================================================================
 
 " Extra escape
-inoremap jj <ESC>
+inoremap jk <ESC>
+" Paste in insert mode
+inoremap <C-y> <ESC>pa
 " Shortcuts to go to EOL/Beginning of line ===============================
 noremap  <C-E>      $
 inoremap <C-E>      <C-O>$
@@ -215,6 +217,9 @@ let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#show_close_button = 0
+" Show filepath instead of git branch
+let g:airline_section_b = '%-0.24{getcwd()}'
+let g:airline_section_c = '%t'
 
 " CtrlP ==================================================================
 let g:ctrlp_map = '<c-p>'
