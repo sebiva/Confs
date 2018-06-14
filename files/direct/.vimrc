@@ -10,7 +10,7 @@ set invhlsearch                 " Inversesearch
 set hlsearch
 set number                      " Set linenumber
 set shiftwidth=4                " Indentation
-set tabstop=4                   " One tab == 1? spaces
+set tabstop=8                   " One tab == 4? spaces
 set smartindent                 " Set smartindent
 set expandtab                   " All spaces as tabs
 set softtabstop=4               " Make backspace work on 'tabs'
