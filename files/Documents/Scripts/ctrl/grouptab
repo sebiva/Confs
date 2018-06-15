@@ -1,2 +1,0 @@
-#!/bin/sh
-cat ~/Documents/ctrl/grouptab.txt | xmacroplay ":0.0" 

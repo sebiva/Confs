@@ -1,7 +1,0 @@
-#!/bin/bash
-
-
-rmmod r8169
-rmmod rtl8192se
-rmmod rtlwifi
-

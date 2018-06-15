@@ -1,3 +1,0 @@
-#!/bin/sh
-
-mtpfs -o allow_other /media/nexus7

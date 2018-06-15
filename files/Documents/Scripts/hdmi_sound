@@ -1,3 +1,0 @@
-#!/bin/bash
-pulseaudio &
-pacmd set-card-profile alsa_card.pci-0000_00_03.0 output:hdmi-stereo-extra1

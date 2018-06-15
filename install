@@ -61,16 +61,6 @@ fi
 
 }
 
-
-# Tmux Plugin Manager
-if [ ! -d "$HOME/.tmux/plugins/tpm" ] # || [ ! -d "$HOME/.tmux/plugins/tmux-resurrect" ]
-then
-    echo "Installing tmux plugin manager"
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    #git clone https://github.com/tmux-plugins/tmux-resurrect ~/.tmux/plugins/tmux-resurrect
-    tmux source-file ~/.tmux.conf
-fi
-
 # Install dotfiles directly to $HOME
 SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
 
@@ -135,10 +125,6 @@ echo "-----------------------------------"
 if [ ! -d "$HOME/Dropbox" ]
 then
   mkdir "$HOME/Documents/Scripts"
-  mkdir "$HOME/Documents/Scripts/ctrl"
-  mkdir "$HOME/Documents/Scripts/internet"
   installallinfolder "$HOME/Documents/Scripts"
-  installallinfolder "$HOME/Documents/Scripts/ctrl"
-  installallinfolder "$HOME/Documents/Scripts/internet"
   echo "Scripts installed"
 fi

@@ -1,7 +1,0 @@
-KeyStrRelease Alt_L
-KeyStrRelease e
-
-KeyStrPress Shift_L
-
-KeyStr dead_acute
-KeyStrRelease Shift_L

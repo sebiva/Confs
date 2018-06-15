@@ -1,3 +1,0 @@
-#!/bin/bash
-
-sshfs sebiva@remote1.student.chalmers.se:/chalmers/users/sebiva/databases Documents/Chalmers-Kurser/TDA357/linkedtochalmers

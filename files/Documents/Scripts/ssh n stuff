@@ -1,9 +1,0 @@
-Skapa RSA nycklar:
-$ ssh-keygen
-
-Spara dem i remotemaskinen:
-ssh-copy-id -i ~/.ssh/id_rsa.pub nemo@192.168.0.11
-
-Logga in utan lösenord:
-ssh nemo@192.168.0.11
-

@@ -1,3 +1,0 @@
-#!/bin/sh 
-
-cat ~/Documents/ctrl/save.txt | xmacroplay ":0.0" 

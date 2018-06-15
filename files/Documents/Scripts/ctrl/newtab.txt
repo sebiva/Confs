@@ -1,6 +1,0 @@
-KeyStrRelease Alt_L
-KeyStrRelease t
-
-KeyStrPress Control_L
-KeyStr t
-KeyStrRelease Control_L

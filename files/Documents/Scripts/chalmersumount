@@ -1,3 +1,0 @@
-#!/bin/bash
-
-fusermount -u /home/or3x/Dropbox/Documents/Chalmers-Kurser/TDA357/linkedtochalmers 

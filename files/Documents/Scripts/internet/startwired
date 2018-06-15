@@ -1,3 +1,0 @@
-#!/bin/sh
-
-gksudo modprobe r8169
