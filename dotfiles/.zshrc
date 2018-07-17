@@ -48,7 +48,7 @@ $HOME/opt:
 /usr/local/bin:
 /usr/bin:
 /bin:
-$HOME/Documents/Scripts:
+$HOME/.scripts:
 " | paste -sd "" -)
 
 # Emacs mode

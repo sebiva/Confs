@@ -17,7 +17,7 @@ function setupvim {
     then
         mkdir -p "$HOME/.vim/colors"
     fi
-    cp "$BASEPATH/files/.vim/colors/BenokaiPrime.vim" "$HOME/.vim/colors"
+    cp "$BASEPATH/BenokaiPrime.vim" "$HOME/.vim/colors"
     # vundle
     if [ ! -d "$HOME/.vim/bundle" ];
     then
@@ -120,8 +120,9 @@ zsh --version
 git --version
 vim --version | head -n1
 
-installfiles $BASEPATH/files/direct $HOME
-installfiles $BASEPATH/files/Documents/Scripts $HOME/Documents/Scripts
+installfiles $BASEPATH/dotfiles $HOME
+mkdir -p $HOME/.scripts
+installfiles $BASEPATH/scripts $HOME/.scripts
 
 setupvim
 setupzsh

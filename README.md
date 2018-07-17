@@ -2,9 +2,13 @@
 
 ## Prerequisites
 
-```git```, ```zsh```, ```tmux```, ```openssh``` (for ssh support with git), ```python``` (for ultisnips)
+```git```, ```zsh```, ```tmux```, ```openssh``` (for ssh support with git),
+```python``` (for ultisnips), ```diff-so-fancy``` (for nicer git diffs).
 
-If run as is, the script assumes the user is able to use ssh:// when cloning git-repos, if this is not the case, either properly generate the ssh-keys, or remove the line that replaces https:// with ssh:// in .gitconfig and it should run.
+If run as is, the script assumes the user is able to use ssh:// when cloning
+git-repos, if this is not the case, either properly generate the ssh-keys, or
+remove the line that replaces https:// with ssh:// in .gitconfig and it should
+run.
 
 ## Installation
 
@@ -14,7 +18,10 @@ Run:
 ./install
 ```
 
-and hope for the best!
+and hope for the best! The script can be modified to ignore vim or zsh by
+simply commenting out the calls to setup\*. If all goes well, the dotfiles
+should be installed to $HOME, and scripts to $HOME/.scripts (which is in the
+PATH in .zshrc).
 
 
 ## Keymap
