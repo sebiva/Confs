@@ -1,9 +1,7 @@
-#xsetroot -cursor_name left_ptr
 setxkbmap se svdvorak
-xrdb -merge ~/.Xresources
-
-#exec xmonad
-
 
 exec gnome-session
-#exec cinnamon-session
+
+# For ux32 touchpad
+#synclient TapButton1=1
+#synclient TapButton2=3
