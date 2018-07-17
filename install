@@ -2,61 +2,115 @@
 
 set -e
 shopt -s dotglob # List . files too
+BASEPATH=$( cd $(dirname $0) ; pwd -P )
 
 ###############################################################################
+
+function setupvim {
+    echo
+    echo "#################"
+    echo "Setting up vim"
+    echo "#################"
+
+    # colors
+    if [ ! -d "$HOME/.vim/colors" ];
+    then
+        mkdir -p "$HOME/.vim/colors"
+    fi
+    cp "$BASEPATH/files/.vim/colors/BenokaiPrime.vim" "$HOME/.vim/colors"
+    # vundle
+    if [ ! -d "$HOME/.vim/bundle" ];
+    then
+        echo "Installing Vundle"
+        mkdir -p "$HOME/.vim/bundle"
+        echo "If the git clone fails, either remove the line about ssh in the"
+        echo ".gitconfig file, or generate a pub-key"
+        git clone "http://github.com/VundleVim/Vundle.vim.git" "$HOME/.vim/bundle/Vundle.vim"
+    fi
+    vim +PluginInstall +qall
+    echo "Plugins installed"
+}
+
+function setupzsh {
+    echo
+    echo "#################"
+    echo "Setting up zsh"
+    echo "#################"
+    if [ ! -d $HOME/.oh-my-zsh ];
+    then
+        echo "If the git clone fails, either remove the line about ssh in the"
+        echo ".gitconfig file, or generate a pub-key"
+        git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
+        echo "oh-my-zsh installed"
+    fi
+
+    if [ ! "$(getent passwd $LOGNAME | cut -d: -f7)" = "/bin/zsh" ]
+    then
+        chsh -s /bin/zsh
+        echo "-----------------------------------"
+        echo "Logout/login needed to change shell"
+        echo "-----------------------------------"
+    fi
+}
 
 # Installs a FILE from SRCDIR to DESTDIR.
 # installfile DESTDIR SRCDIR FILE
 function installfile {
-if [ ! "$#" == 3 ]
-then
-    echo "Wrong number of arguments to installfile: $@"
-    exit 1
-fi
-SRCDIR="$1"
-DESTDIR="$2"
-FILE="$3"
-SRC="$SRCDIR/$FILE"
-DEST="$DESTDIR/$FILE"
-if [ ! -e "$SRC" ]
-then
-    echo "File does not exist: $SRC"
-    exit 1
-fi
-if [ "$(readlink $DEST)" = "$SRC" ]
-then
-    echo "already installed $FILE"
-elif [ -L "$DEST" ]
-then
-    OLD=$(readlink $DEST)
-    rm "$DEST"
-    ln -s "$SRC" "$DEST"
-    echo "updated $FILE (pointed to $OLD)"
-elif [ -e "$DEST" ]
-then
-    echo "already exists $FILE, skipping"
-    diff "$DEST" "$SRC" || :   # Always succeed
-else
-    ln -s "$SRC" "$DEST"
-    echo "installed $FILE"
-fi
+    if [ ! "$#" == 3 ]
+    then
+        echo "Wrong number of arguments to installfile: $@"
+        exit 1
+    fi
+    SRCDIR="$1"
+    DESTDIR="$2"
+    FILE="$3"
+    SRC="$SRCDIR/$FILE"
+    DEST="$DESTDIR/$FILE"
+    if [ ! -e "$SRC" ]
+    then
+        echo "File does not exist: $SRC"
+        exit 1
+    fi
+    if [ "$(readlink $DEST)" = "$SRC" ]
+    then
+        echo "already installed $FILE"
+    elif [ -L "$DEST" ]
+    then
+        OLD=$(readlink $DEST)
+        rm "$DEST"
+        ln -s "$SRC" "$DEST"
+        echo "updated $FILE (pointed to $OLD)"
+    elif [ -e "$DEST" ]
+    then
+        echo "already exists $FILE, skipping"
+        diff "$DEST" "$SRC" || :   # Always succeed
+    else
+        ln -s "$SRC" "$DEST"
+        echo "installed $FILE"
+    fi
 }
 
 # Installs all files in SRCDIR into DESTDIR
 # installfiles DESTDIR SRCDIR
 function installfiles {
-if [ ! "$#" == 2 ]
-then
-    echo "Wrong number of arguments to installfiles: $@"
-    exit 1
-fi
-SRCDIR="$1"
-DESTDIR="$2"
-FILES=$(ls -A $SRCDIR -I ".*.un~")
-for FILE in $FILES
-do
-    installfile "$SRCDIR" "$DESTDIR" "$FILE"
-done
+    if [ ! "$#" == 2 ]
+    then
+        echo "Wrong number of arguments to installfiles: $@"
+        exit 1
+    fi
+    SRCDIR="$1"
+    DESTDIR="$2"
+    echo
+    echo "#################"
+    echo "Installing files"
+    echo "from: $SRCDIR"
+    echo "to:   $DESTDIR"
+    echo "#################"
+    FILES=$(ls -A $SRCDIR -I ".*.un~")
+    for FILE in $FILES
+    do
+        installfile "$SRCDIR" "$DESTDIR" "$FILE"
+    done
 }
 
 ###############################################################################
@@ -66,60 +120,11 @@ zsh --version
 git --version
 vim --version | head -n1
 
+installfiles $BASEPATH/files/direct $HOME
+installfiles $BASEPATH/files/Documents/Scripts $HOME/Documents/Scripts
 
-BASEPATH=$( cd $(dirname $0) ; pwd -P )
-DIRECTPATH=$BASEPATH/files/direct
-echo "#################"
-echo "Installing config files from $DIRECTPATH to $HOME"
-echo "#################"
-installfiles $DIRECTPATH $HOME
-
-SCRIPTPATH=$BASEPATH/files/Documents/Scripts
-SCRIPTDEST="$HOME/Documents/Scripts"
-echo "#################"
-echo "Installing scripts from $SCRIPTPATH to $SCRIPTDEST"
-echo "#################"
-
-installfiles $SCRIPTPATH $SCRIPTDEST
-
-echo "#################"
-echo "Setting up vim"
-echo "#################"
-
-# colors
-if [ ! -d "$HOME/.vim/colors" ];
-then
-    mkdir -p "$HOME/.vim/colors"
-fi
-cp "$BASEPATH/files/.vim/colors/BenokaiPrime.vim" "$HOME/.vim/colors"
-# vundle
-if [ ! -d "$HOME/.vim/bundle" ];
-then
-    echo "Installing Vundle"
-    mkdir -p "$HOME/.vim/bundle"
-    echo "If the git clone fails, either remove the line about ssh in the .gitconfig file, or generate a pub-key"
-    git clone "http://github.com/VundleVim/Vundle.vim.git" "$HOME/.vim/bundle/Vundle.vim"
-fi
-vim +PluginInstall +qall
-echo "Plugins installed"
-
-echo "#################"
-echo "Setting up zsh"
-echo "#################"
-if [ ! -d $HOME/.oh-my-zsh ];
-then
-    echo "If the git clone fails, either remove the line about ssh in the .gitconfig file, or generate a pub-key"
-    git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
-    echo "oh-my-zsh installed"
-fi
-
-if [ ! "$(getent passwd $LOGNAME | cut -d: -f7)" = "/bin/zsh" ]
-then
-    chsh -s /bin/zsh
-    echo "-----------------------------------"
-    echo "Logout/login needed to change shell"
-    echo "-----------------------------------"
-fi
+setupvim
+setupzsh
 
 echo "done"
 exit 0
