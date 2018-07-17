@@ -1,4 +1,0 @@
-# This file is just a stub to the real file in the Confs repo (due to oh-my-zsh
-# installation stuff)
-
-source $HOME/Confs/files/.zshrc

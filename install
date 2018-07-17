@@ -1,130 +1,125 @@
 #!/bin/bash
 
-if [ -d $HOME/tmp_install ];
-then
-  echo "~/tmp_install already exists!"
-  exit 1
-fi
-
-#Takes the file to install (to $HOME) and its path
-function installfile {
-if [ "$#" == 2 ]
-then
-  if [ -e "$1/$2" ]
-  then
-    #if { [ ! -e "$HOME/$2" ] || [ -L "$HOME/$2" ]; } && [ -e "$1/$2" ]
-    if [ -L "$HOME/$2" ]
-    then
-      rm "$HOME/$2"
-      ln -s "$1/$2" "$HOME/$2"
-      echo "updated $2"
-    else
-      if [ ! -e "$HOME/$2" ]
-      then
-        ln -s "$1/$2" "$HOME/$2"
-        echo "installed $2"
-      else
-        echo "Already exists: $HOME/$2"
-      fi
-    fi
-  else
-    echo "Source $1/$2 not found"
-  fi
-fi
-}
-# Takes the path relative to $SCRIPTPATH and the filename
-function installfileinfolder {
-if [ "$#" == 2 ]
-then
-    if [ ! -d "$HOME/$1" ] && [ -e "$SCRIPTPATH/$1" ]
-    then
-        mkdir -p "$1"
-    fi
-    installfile "$1" "$2"
-fi
-}
-# Takes the path relative to $SCRIPTPATH
-function installallinfolder {
-if [ "$#" == 1 ]
-then
-    pth="$1/*"
-    for i in $pth
-    do
-        if [ -f "$i" ]
-        then
-            file=$(basename "$i")
-            dir=$(dirname "$i")
-            installfileinfolder "$dir" "$file"
-        fi
-    done
-fi
-
-}
-
-# Install dotfiles directly to $HOME
-SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
-
-echo "Installing config files from $SCRIPTPATH to $HOME"
+set -e
 shopt -s dotglob # List . files too
-echo $SCRIPTPATH/files
-DIRECTFILES=$(ls -A $SCRIPTPATH/files/direct)
 
+###############################################################################
 
-for f in $DIRECTFILES
+# Installs a FILE from SRCDIR to DESTDIR.
+# installfile DESTDIR SRCDIR FILE
+function installfile {
+if [ ! "$#" == 3 ]
+then
+    echo "Wrong number of arguments to installfile: $@"
+    exit 1
+fi
+SRCDIR="$1"
+DESTDIR="$2"
+FILE="$3"
+SRC="$SRCDIR/$FILE"
+DEST="$DESTDIR/$FILE"
+if [ ! -e "$SRC" ]
+then
+    echo "File does not exist: $SRC"
+    exit 1
+fi
+if [ "$(readlink $DEST)" = "$SRC" ]
+then
+    echo "already installed $FILE"
+elif [ -L "$DEST" ]
+then
+    OLD=$(readlink $DEST)
+    rm "$DEST"
+    ln -s "$SRC" "$DEST"
+    echo "updated $FILE (pointed to $OLD)"
+elif [ -e "$DEST" ]
+then
+    echo "already exists $FILE, skipping"
+    diff "$DEST" "$SRC" || :   # Always succeed
+else
+    ln -s "$SRC" "$DEST"
+    echo "installed $FILE"
+fi
+}
+
+# Installs all files in SRCDIR into DESTDIR
+# installfiles DESTDIR SRCDIR
+function installfiles {
+if [ ! "$#" == 2 ]
+then
+    echo "Wrong number of arguments to installfiles: $@"
+    exit 1
+fi
+SRCDIR="$1"
+DESTDIR="$2"
+FILES=$(ls -A $SRCDIR -I ".*.un~")
+for FILE in $FILES
 do
-  installfile "$SCRIPTPATH/files/direct" "$f"
+    installfile "$SRCDIR" "$DESTDIR" "$FILE"
 done
+}
 
-### Vim
+###############################################################################
+
+echo "Using:"
+zsh --version
+git --version
+vim --version | head -n1
+
+
+BASEPATH=$( cd $(dirname $0) ; pwd -P )
+DIRECTPATH=$BASEPATH/files/direct
+echo "#################"
+echo "Installing config files from $DIRECTPATH to $HOME"
+echo "#################"
+installfiles $DIRECTPATH $HOME
+
+SCRIPTPATH=$BASEPATH/files/Documents/Scripts
+SCRIPTDEST="$HOME/Documents/Scripts"
+echo "#################"
+echo "Installing scripts from $SCRIPTPATH to $SCRIPTDEST"
+echo "#################"
+
+installfiles $SCRIPTPATH $SCRIPTDEST
+
+echo "#################"
+echo "Setting up vim"
+echo "#################"
+
 # colors
 if [ ! -d "$HOME/.vim/colors" ];
 then
-  mkdir -p "$HOME/.vim/colors"
+    mkdir -p "$HOME/.vim/colors"
 fi
-cp "$SCRIPTPATH/files/.vim/colors/BenokaiPrime.vim" "$HOME/.vim/colors"
+cp "$BASEPATH/files/.vim/colors/BenokaiPrime.vim" "$HOME/.vim/colors"
 # vundle
 if [ ! -d "$HOME/.vim/bundle" ];
 then
-  mkdir -p "$HOME/.vim/bundle"
+    echo "Installing Vundle"
+    mkdir -p "$HOME/.vim/bundle"
+    echo "If the git clone fails, either remove the line about ssh in the .gitconfig file, or generate a pub-key"
+    git clone "http://github.com/VundleVim/Vundle.vim.git" "$HOME/.vim/bundle/Vundle.vim"
 fi
-git clone "http://github.com/VundleVim/Vundle.vim.git" "$HOME/.vim/bundle/Vundle.vim"
-echo "If the git clone fails, either remove the line about ssh in the .gitconfig file, or generate a pub-key"
 vim +PluginInstall +qall
-# Vim-latex
-mkdir tmp_install
-git clone https://github.com/vim-latex/vim-latex tmp_install/vim-latex
-cd tmp_install; make; cd ..
-rm -rf tmp_install
-echo "Vim stuff installed"
+echo "Plugins installed"
 
-### ZSH
-mv "$HOME/.zshrc" "$HOME/.bakzshrc"
-# oh-my-zsh
-if [ ! -f $HOME/.oh-my-zsh ];
+echo "#################"
+echo "Setting up zsh"
+echo "#################"
+if [ ! -d $HOME/.oh-my-zsh ];
 then
-  mkdir tmp_install
-  git clone https://github.com/robbyrussell/oh-my-zsh.git tmp_install/
-  echo "Remember to exit the zsh shell after installing"
-  tmp_install/tools/install.sh
-  rm -rf tmp_install
+    echo "If the git clone fails, either remove the line about ssh in the .gitconfig file, or generate a pub-key"
+    git clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
+    echo "oh-my-zsh installed"
 fi
 
-
-# stub
-cp "files/.zshrc-stub" "$HOME/.zshrc"
-echo "Zsh installed"
-
-chsh -s /bin/zsh
-
-echo "-----------------------------------"
-echo "Logout/login needed to change shell"
-echo "-----------------------------------"
-
-## Install scripts
-
-if [ ! -d "$HOME/Dropbox" ]
+if [ ! "$(getent passwd $LOGNAME | cut -d: -f7)" = "/bin/zsh" ]
 then
-  mkdir "$HOME/Documents/Scripts"
-  installallinfolder "$HOME/Documents/Scripts"
-  echo "Scripts installed"
+    chsh -s /bin/zsh
+    echo "-----------------------------------"
+    echo "Logout/login needed to change shell"
+    echo "-----------------------------------"
 fi
+
+echo "done"
+exit 0

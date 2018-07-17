@@ -194,6 +194,8 @@ Plugin 'PeterRincker/vim-argumentative'
 Plugin 'tpope/vim-repeat'
 " Make vim remember where the cursor was
 Plugin 'farmergreg/vim-lastplace'
+" Latex
+Plugin 'vim-latex/vim-latex'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
