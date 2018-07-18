@@ -206,7 +206,9 @@ call vundle#end()            " required
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 " see :h vundle for more details or wiki for FAQ
 
+" ========================================================================
 " Bundle configs =========================================================
+" ========================================================================
 
 " Airline ================================================================
 set laststatus=2
@@ -331,3 +333,9 @@ let g:Tex_MultipleCompileFormats='pdf,bib'
 let g:Imap_FreezeImap=1
 
 " Latex END ==============================================================
+
+" Tmux navigator =========================================================
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
