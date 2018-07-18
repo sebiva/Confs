@@ -1,13 +1,20 @@
 [credential]
-	helper = cache
+    helper = cache
 [user]
-	email = ivarsson.sebastian@gmail.com
-	name = Sebastian Ivarsson
+    email = ivarsson.sebastian@gmail.com
+    name = Sebastian Ivarsson
 [push]
-	default = simple
+    default = simple
 [url "ssh://git@github.com/"]
-	insteadOf = https://github.com/
+    insteadOf = https://github.com/
 [core]
-	pager = diff-so-fancy | less --tabs=4 -RFX
+    pager = diff-so-fancy | less --tabs=4 -RFX
+    excludesfile = ~/.gitignore
 [color]
-	ui = auto
+    ui = auto
+[alias]
+    in = log ..origin
+    out = log origin..
+    in-master = log ..origin/master
+    out-master = log origin/master..
+    reset-date = !git commit --amend --no-edit --date=\"$(date -R)\"
