@@ -5,16 +5,22 @@
     name = Sebastian Ivarsson
 [push]
     default = simple
-[url "ssh://git@github.com/"]
-    insteadOf = https://github.com/
 [core]
     pager = diff-so-fancy | less --tabs=4 -RFX
     excludesfile = ~/.gitignore
 [color]
     ui = auto
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
 [alias]
-    in = log ..origin
-    out = log origin..
-    in-master = log ..origin/master
-    out-master = log origin/master..
     reset-date = !git commit --amend --no-edit --date=\"$(date -R)\"
+    logg = log --graph --oneline
+
+    in = log ..@{upstream}
+    out = log @{upstream}..
+    in-master = log ..origin/master --stat
+    out-master = log origin/master..
+    push-for-master = push origin HEAD:refs/for/master
+    rebase-master = rebase -i origin/master
+
+    statsu = status
