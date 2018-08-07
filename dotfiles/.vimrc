@@ -335,7 +335,10 @@ let g:Imap_FreezeImap=1
 " Latex END ==============================================================
 
 " Tmux navigator =========================================================
-nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+let g:BASH_Ctrl_j = 'off'
+augroup vimrc
+    au!
+    au VimEnter * unmap <C-j>
+    " vim-latex overwrites C-j (https://stackoverflow.com/a/31502538)
+    au VimEnter * nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+augroup END
