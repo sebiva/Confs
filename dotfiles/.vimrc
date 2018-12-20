@@ -4,7 +4,6 @@ set shell=/bin/zsh
 " Basic settings =========================================================
 " ========================================================================
 set nocompatible                " be iMproved, required
-filetype off                    " required
 filetype indent plugin on       " required for latex and vundle
 set invhlsearch                 " Inversesearch
 set hlsearch
@@ -106,20 +105,33 @@ noremap <Leader>n   :bn<CR>
 noremap <Leader>p   :bp<CR>
 " Last edited buffer
 noremap <Leader>l   :b#<CR>
+" Close buffer
+noremap <Leader>d   :bd<CR>
 noremap <Leader>N   :tabn<CR>
 noremap <Leader>P   :tabp<CR>
+" Save
+noremap <silent><Leader>w   :w<CR>
 
 " single characters are not written to a register when deleted
 noremap x "_x
 " Move lines down with '-' and up with '_'
 noremap - ddp
 noremap _ ddkP
+" replace a line
+noremap <leader>r "_ddP$
 " Uppercase with <c-u> - conflits with scroll up, need other shortcut
 "inoremap <c-u> <esc>viwUea
 "nnoremap <c-u> viwU
 " Open vimrc in split, source vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
+" * works in visual mode too
+" (https://stackoverflow.com/questions/8587136/how-do-i-search-for-the-selected-text)
+vnoremap * :<C-U>let old_reg=getreg('"')\|let old_regtype=getregtype('"')<CR>
+    \ gvy/<C-R><C-R>=substitute(
+        \ substitute(escape(@", '/\.*$^~['), '\s\+', '\\s\\+', 'g')
+        \ , '\_s\+', '\\_s*', 'g')<CR><CR>
+    \ gV:call setreg('"', old_reg, old_regtype)<CR>:let v:searchforward=1<CR>
 
 " ========================================================================
 " Vundle =================================================================
@@ -188,6 +200,8 @@ Plugin 'vim-erlang/vim-erlang-tags'
 Plugin 'vim-erlang/vim-erlang-compiler'
 " Erlang skeletons
 Plugin 'vim-erlang/vim-erlang-skeletons'
+" Erlang omni complete (including stdlib)
+Plugin 'vim-erlang/vim-erlang-omnicomplete'
 " Argumentative, moving args in ,-separated lists
 Plugin 'PeterRincker/vim-argumentative'
 " Repeat plugin-commands with . (dot)
@@ -272,14 +286,20 @@ let g:neomake_erlang_flycheck_maker = {
             \ }
 let g:neomake_open_list = 2
 noremap <Leader>c :Neomake<CR>
-autocmd BufWritePost * Neomake
+
+" Don't automatically compile on write
+"autocmd BufWritePost * Neomake
 
 "noremap <silent> <Leader>c :ErlangEnableShowErrors :call erlang_compiler#AutoRun(expand("<abuf>")+0)<CR>
 "command! -nargs=1 Silent
             "\   execute 'silent !' . <q-args>
             "\ | execute 'redraw!'
 "noremap <silent> <Leader>c :make<CR> :redraw!<CR>
-"
+
+" Remove extra window for vim-erlang-omnicomplete, and make Leader-C-n open the
+" completion.
+:set cot-=preview
+noremap <Leader><C-n> <C-x><C-o>
 
 " Nerdtree file browser ==================================================
 noremap <C-s> :NERDTreeToggle<CR>
@@ -289,7 +309,9 @@ nnoremap <F7> :GitGutterStageHunk<CR>
 nnoremap <F8> :GitGutterPreviewHunk<CR>
 nnoremap <F9> :GitGutterPrevHunk<CR>
 nnoremap <F10> :GitGutterNextHunk<CR>
-nnoremap <F12> :GitGutterRevertHunk<CR>
+nnoremap <F12> :GitGutterUndoHunk<CR>
+" Make changes show faster (4000ms is default)
+set updatetime=100
 " Whitespace
 highlight ExtraWhitespace ctermbg=red
 
@@ -342,3 +364,8 @@ augroup vimrc
     " vim-latex overwrites C-j (https://stackoverflow.com/a/31502538)
     au VimEnter * nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
 augroup END
+" Also make the mappings work in insert mode
+inoremap <silent> <C-j> <ESC>:TmuxNavigateDown<cr>
+inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>
+inoremap <silent> <C-l> <ESC>:TmuxNavigateLeft<cr>
+inoremap <silent> <C-h> <ESC>:TmuxNavigateRight<cr>
