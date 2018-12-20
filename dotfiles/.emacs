@@ -1,28 +1,14 @@
-;; EQC Emacs Mode -- Configuration Start
-(add-to-list 'load-path "/usr/lib/erlang/lib/eqc-1.36.1/emacs/")
-(autoload 'eqc-erlang-mode-hook "eqc-ext" "EQC Mode" t)
-(add-hook 'erlang-mode-hook 'eqc-erlang-mode-hook)
-(setq eqc-max-menu-length 30)
-(setq eqc-root-dir "/usr/lib/erlang/lib/eqc-1.36.1")
-;; EQC Emacs Mode -- Configuration End
-
 ;erlang mode
-(setq load-path (cons  "/usr/lib/erlang/lib/tools-2.8.2/emacs"
+(setq load-path (cons  "/home/ezivase/opt/otp/OTP-20.3.2/x86_64-pc-linux-gnu/lib/erlang/lib/tools-2.11.2/emacs"
       load-path))
-      (setq erlang-root-dir "/usr/lib/erlang")
-      (setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
+      (setq erlang-root-dir "$ERLTOP")
+      (setq exec-path (cons "$ERLTOP" exec-path))
       (require 'erlang-start)
 
 ;;Remove menubar
 (menu-bar-mode -1)
 
-;;Qml mode
-(require 'css-mode)
-(require 'js)
-(load-file "$HOME/Documents/Dev/emacs/qml-mode.el")
-(require 'qml-mode)
-
-;;Move backup files 
+;;Move backup files
 (setq backup-directory-alist `(("." . "~/.saves-emacs")))
 ;;Save more backups
 (setq delete-old-versions t
@@ -36,9 +22,9 @@
 
 ;;File browser C-x d
 ;(load-file "$HOME/Documents/Dev/emacs/dired-detailsplus.el")
-(load-file "$HOME/Documents/Dev/emacs/dired-details.el")
-(require 'dired-details)
-(dired-details-install)
+;(load-file "$HOME/Documents/Dev/emacs/dired-details.el")
+;(require 'dired-details)
+;(dired-details-install)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (autoload 'ibuffer "ibuffer" "List buffers." t)
@@ -79,14 +65,13 @@
 
 
 ;;Markerar all paranteser man är i
-(load-file "$HOME/Dropbox/Documents/Dev/emacs/highlight-parentheses.el")
-(require 'highlight-parentheses)
-
-(define-globalized-minor-mode global-highlight-parentheses-mode
-  highlight-parentheses-mode
-  (lambda ()
-    (highlight-parentheses-mode t)))
-(global-highlight-parentheses-mode t)
+;(load-file "$HOME/Dropbox/Documents/Dev/emacs/highlight-parentheses.el")
+;(require 'highlight-parentheses)
+;(define-globalized-minor-mode global-highlight-parentheses-mode
+  ;highlight-parentheses-mode
+  ;(lambda ()
+    ;(highlight-parentheses-mode t)))
+;(global-highlight-parentheses-mode t)
 
 
 ;;Copy paste utanför emacs
