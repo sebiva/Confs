@@ -1,4 +1,4 @@
-set shell=/bin/zsh
+set shell=/bin/bash  " zsh was causing problems (can't open tmp)
 
 " ========================================================================
 " Basic settings =========================================================
