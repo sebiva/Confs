@@ -336,18 +336,7 @@ let g:tex_flavor='latex'
 " Don't open log files automatically
 let g:Tex_GotoError=0
 
-" For the thesis report:
-if ! empty(matchstr(expand('%:p'), "/home/or3x/Dropbox/Documents/Chalmers-Kurser/Thesis/thesis-report/.*"))
-    let g:mainfile = expand(fnamemodify('main.tex', ':p'))
-    let g:Tex_CompileRule_pdf='cd .. && latexmk -pdf -outdir=out/ -auxdir=out/ -pdflatex="pdflatex -shell-escape" ' . g:mainfile
-elseif ! empty(matchstr(expand('%:p'), "/home/or3x/Dropbox/Documents/Chalmers-Kurser/Thesis/thesis-presentation/.*"))
-    let g:mainfile = expand(fnamemodify('main.tex', ':p'))
-    "let g:Tex_CompileRule_pdf='latexmk -pdf -outdir=out/ -auxdir=out/ -pdflatex="pdflatex -shell-escape" ' . g:mainfile
-    let g:Tex_CompileRule_pdf='latexmk -pdf -outdir=out/ -auxdir=out/ -pdflatex="pdflatex -shell-escape" main.tex'
-    let g:Tex_CompileRule_pdf='pdflatex -output-directory=out/ -shell-escape main.tex'
-else
-    let g:Tex_CompileRule_pdf='latexmk -pdf -outdir=out/ -auxdir=out/ %:r'
-endif
+let g:Tex_CompileRule_pdf='latexmk -pdf -outdir=out/ -auxdir=out/ %:r'
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_MultipleCompileFormats='pdf,bib'
 
