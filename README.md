@@ -37,3 +37,23 @@ To make it permanent, copy the file to ```/etc/share/kbd/keymaps/i386/dvorak/```
 ```
 KEYMAP=dvorak-sv-42.map.gz
 ```
+
+## Restoring terminal settings
+
+```shell
+dconf load /org/gnome/terminal/ < Confs/terminal.conf
+```
+
+To export the current settings, use:
+
+```shell
+dconf dump /org/gnome/terminal/ > Confs/terminal.conf
+```
+
+See also:
+https://unix.stackexchange.com/questions/448811/how-to-export-a-gnome-terminal-profile
+
+## Fonts
+
+Ubuntu Mono derivative Powerline can be found here:
+https://github.com/powerline/fonts
