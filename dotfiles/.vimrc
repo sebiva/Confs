@@ -286,13 +286,14 @@ function! s:flycheck_postprocess(entry)
     endif
 endfunction
 
+" . is used for concat with $HOME
 let g:neomake_erlang_enabled_makers = ['flycheck']
 let g:neomake_erlang_flycheck_maker = {
-            \ 'exe': '/home/ezivase/.vim/bundle/vim-erlang-compiler/compiler/erlang_check.erl',
-            \ 'args': ['--nooutdir'],
-            \ 'errorformat': '%f:%l: %m,%f: %m',
-            \ 'postprocess': function('s:flycheck_postprocess')
-            \ }
+    \ 'exe': $HOME . '/.vim/bundle/vim-erlang-compiler/compiler/erlang_check.erl',
+    \ 'args': ['--nooutdir'],
+    \ 'errorformat': '%f:%l: %m,%f: %m',
+    \ 'postprocess': function('s:flycheck_postprocess')
+    \ }
 let g:neomake_open_list = 2
 noremap <Leader>c :Neomake<CR>
 
