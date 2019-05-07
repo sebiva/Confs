@@ -9,11 +9,10 @@ set invhlsearch                 " Inversesearch
 set hlsearch
 set number                      " Set linenumber
 set shiftwidth=4                " Indentation
-set tabstop=8                   " One tab == 4? spaces
+set tabstop=8                   " One tab == 8 spaces
 set smartindent                 " Set smartindent
 set expandtab                   " All spaces as tabs
 set softtabstop=4               " Make backspace work on 'tabs'
-set ruler                       " Infobar at bottom
 set modelines=0                 " Disable modelines
 set undofile                    " Activate undofile
 set gdefault                    " %s/abc/def/ is now %s/abc/def/g
@@ -29,17 +28,11 @@ let mapleader = ","             " remap leaderkey
 set relativenumber              " Relative numbering
 set lazyredraw
 set ruler                       " Ruler line
-set nrformats=
 set clipboard=unnamedplus       " Clipboard, p and y go to X-clipboard
 set switchbuf="useopen"         " Open buffers in the current tab, not in other
 set autoread                    " Don't ask to load changed files (when changed
                                 " in git for example), unless there are unsaved
                                 " changes in the buffer.
-
-" Statusline
-" TODO: Should this be together with airline settings?
-set statusline+=%#warningmsg#
-set statusline+=%*
 
 " Make # comments in python stay indented
 autocmd BufRead *.py inoremap # X<c-h>#
@@ -59,13 +52,13 @@ autocmd BufRead *.py inoremap # X<c-h>#
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
-" Make vim save .un~ and .swp files in $TEMP instead:
-"set backupdir=$HOME/.tmp//
-"set directory=$HOME/.tmp//
-"set undodir=$HOME/.tmp//
+" Make vim save .un~ and .swp files in $HOME/tmp instead:
+set backupdir=$HOME/tmp//
+set directory=$HOME/tmp//
+set undodir=$HOME/tmp//
 
 " tags
-"set tags=./tags;
+set tags=./tags;
 
 " ========================================================================
 " Mappings ===============================================================
@@ -105,8 +98,10 @@ noremap <Leader>n   :bn<CR>
 noremap <Leader>p   :bp<CR>
 " Last edited buffer
 noremap <Leader>l   :b#<CR>
-" Close buffer
-noremap <Leader>d   :bd<CR>
+" Close buffer but don't close the window
+noremap <Leader>d   :bp\|bd #<CR>
+" Close window
+noremap <Leader>D   <C-w>c
 noremap <Leader>N   :tabn<CR>
 noremap <Leader>P   :tabp<CR>
 " Save
@@ -140,6 +135,7 @@ vnoremap * :<C-U>let old_reg=getreg('"')\|let old_regtype=getregtype('"')<CR>
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+filetype off
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -179,9 +175,11 @@ Plugin 'tpope/vim-fugitive'
 " vimproc
 Bundle 'Shougo/vimproc.vim'
 " Track the engine.
-Plugin 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
+if ! has('nvim') " Ultisnips does not work in neovim
+    Plugin 'SirVer/ultisnips'
+    " Snippets are separated from the engine. Add this if you want them:
+    Plugin 'honza/vim-snippets'
+endif
 " Show git diff indicator in sidebar
 Plugin 'airblade/vim-gitgutter'
 " Center all text
@@ -210,6 +208,8 @@ Plugin 'tpope/vim-repeat'
 Plugin 'farmergreg/vim-lastplace'
 " Latex
 Plugin 'vim-latex/vim-latex'
+" grepper :Grepper, :GrepperGit
+Plugin 'mhinz/vim-grepper'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -220,6 +220,9 @@ call vundle#end()            " required
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 " see :h vundle for more details or wiki for FAQ
 
+" - - - -
+" Needed again for ultisnips to work (after vundle stuff appearently)
+filetype indent plugin on       " required for latex and vundle
 " ========================================================================
 " Bundle configs =========================================================
 " ========================================================================
@@ -239,6 +242,10 @@ let g:airline#extensions#tabline#show_close_button = 0
 let g:airline_section_b = '%-0.24{getcwd()}'
 let g:airline_section_c = '%t'
 
+" Statusline
+set statusline+=%#warningmsg#
+set statusline+=%*
+
 " CtrlP ==================================================================
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
@@ -253,13 +260,15 @@ let g:bufExplorerShowTabBuffer=1        " Yes.
 let g:bufExplorerSortBy='name'       " Sort by the buffer's name.
 
 " Ultisnips ==============================================================
-" Trigger configuration. Do not use <tab> if you use
-" https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+if ! has('nvim')
+    " Trigger configuration. Do not use <tab> if you use
+    " https://github.com/Valloric/YouCompleteMe.
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<tab>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-tab>"
+    " If you want :UltiSnipsEdit to split your window.
+    let g:UltiSnipsEditSplit="vertical"
+endif
 
 " Erlang stuff ===========================================================
 :set runtimepath^=$HOME/.vim/plugin/
@@ -288,7 +297,7 @@ let g:neomake_open_list = 2
 noremap <Leader>c :Neomake<CR>
 
 " Don't automatically compile on write
-"autocmd BufWritePost * Neomake
+autocmd BufWritePost * Neomake
 
 "noremap <silent> <Leader>c :ErlangEnableShowErrors :call erlang_compiler#AutoRun(expand("<abuf>")+0)<CR>
 "command! -nargs=1 Silent
@@ -299,7 +308,7 @@ noremap <Leader>c :Neomake<CR>
 " Remove extra window for vim-erlang-omnicomplete, and make Leader-C-n open the
 " completion.
 :set cot-=preview
-noremap <Leader><C-n> <C-x><C-o>
+inoremap <Leader><C-n> <C-x><C-o>
 
 " Nerdtree file browser ==================================================
 noremap <C-s> :NERDTreeToggle<CR>
@@ -358,3 +367,14 @@ inoremap <silent> <C-j> <ESC>:TmuxNavigateDown<cr>
 inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>
 inoremap <silent> <C-l> <ESC>:TmuxNavigateLeft<cr>
 inoremap <silent> <C-h> <ESC>:TmuxNavigateRight<cr>
+
+" Nvim python ============================================================
+let g:python_host_prog="/usr/bin/python"
+
+" Grepper ================================================================
+nnoremap <Leader>g :GrepperGit<SPACE>
+" Search with motion or visual selection
+nmap gs  <plug>(GrepperOperator)
+xmap gs  <plug>(GrepperOperator)
+
+"let g:grepper.highlight=1
