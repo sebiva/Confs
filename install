@@ -27,6 +27,7 @@ function setupvim {
         echo ".gitconfig file, or generate a pub-key"
         git clone "http://github.com/VundleVim/Vundle.vim.git" "$HOME/.vim/bundle/Vundle.vim"
     fi
+    installfile "$BASEPATH/dotfiles/" ".vimrc" "$HOME" ".nvimrc"
     vim +PluginInstall +qall
     echo "Plugins installed"
 }
@@ -54,7 +55,7 @@ function setupzsh {
 }
 
 # Installs a FILE from SRCDIR to DESTDIR.
-# installfile DESTDIR SRCDIR FILE
+# installfile SRCDIR SRCFILE DESTDIR DESTFILE
 function installfile {
     if [ ! "$#" == 3 ]
     then
@@ -62,10 +63,11 @@ function installfile {
         exit 1
     fi
     SRCDIR="$1"
-    DESTDIR="$2"
-    FILE="$3"
-    SRC="$SRCDIR/$FILE"
-    DEST="$DESTDIR/$FILE"
+    SRCFILE="$2"
+    DESTDIR="$3"
+    DESTFILE="$4"
+    SRC="$SRCDIR/$SRCFILE"
+    DEST="$DESTDIR/$DESTFILE"
     if [ ! -e "$SRC" ]
     then
         echo "File does not exist: $SRC"
@@ -73,20 +75,20 @@ function installfile {
     fi
     if [ "$(readlink $DEST)" = "$SRC" ]
     then
-        echo "already installed $FILE"
+        echo "already installed $DESTFILE"
     elif [ -L "$DEST" ]
     then
         OLD=$(readlink $DEST)
         rm "$DEST"
         ln -s "$SRC" "$DEST"
-        echo "updated $FILE (pointed to $OLD)"
+        echo "updated $DESTFILE (pointed to $OLD)"
     elif [ -e "$DEST" ]
     then
-        echo "already exists $FILE, skipping"
+        echo "already exists $DESTFILE, skipping"
         diff "$DEST" "$SRC" || :   # Always succeed
     else
         ln -s "$SRC" "$DEST"
-        echo "installed $FILE"
+        echo "installed $DESTFILE"
     fi
 }
 
@@ -109,7 +111,7 @@ function installfiles {
     FILES=$(ls -A $SRCDIR -I ".*.un~")
     for FILE in $FILES
     do
-        installfile "$SRCDIR" "$DESTDIR" "$FILE"
+        installfile "$SRCDIR" "$FILE" "$DESTDIR" "$FILE"
     done
 }
 
