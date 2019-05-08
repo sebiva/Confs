@@ -210,6 +210,10 @@ Plugin 'farmergreg/vim-lastplace'
 Plugin 'vim-latex/vim-latex'
 " grepper :Grepper, :GrepperGit
 Plugin 'mhinz/vim-grepper'
+" Dependency for vim-mark
+Plugin 'inkarkat/vim-ingo-library'
+" mark/highlight text. Leader-m to mark. :Mark to hide, :ClearMark to remove
+Plugin 'inkarkat/vim-mark'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -379,3 +383,9 @@ nmap gs  <plug>(GrepperOperator)
 xmap gs  <plug>(GrepperOperator)
 
 "let g:grepper.highlight=1
+
+" vim-mark ===============================================================
+" Need to remap these to avoid collisions with <Leader>n and <Leader>r
+nmap <unique> <Leader>s <Plug>MarkRegex
+xmap <unique> <Leader>S <Plug>MarkRegex
+nmap <unique> <Leader>C <Plug>MarkClear
