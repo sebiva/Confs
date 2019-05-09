@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [ ! "$#" == 1 ]
+then
+    echo "Usage: install [all | vim | tmux | scripts | dotfiles]"
+    exit 1
+fi
+todo=$1
+
 set -e
 shopt -s dotglob # List . files too
 BASEPATH=$( cd $(dirname $0) ; pwd -P )
@@ -117,17 +124,40 @@ function installfiles {
 
 ###############################################################################
 
+
 echo "Using:"
 zsh --version
 git --version
 vim --version | head -n1
 
-installfiles $BASEPATH/dotfiles $HOME
-mkdir -p $HOME/.scripts
-installfiles $BASEPATH/scripts $HOME/.scripts
 
-setupvim
-setupzsh
+if [ $todo == "all" ] || [ $todo == "dotfiles" ]
+then
+    echo "Installing dotfiles"
+    installfiles $BASEPATH/dotfiles $HOME
+fi
+if [ $todo == "all" ] || [ $todo == "scripts" ]
+then
+    echo "Installing scripts"
+    mkdir -p $HOME/.scripts
+    installfiles $BASEPATH/scripts $HOME/.scripts
+fi
+if [ $todo == "all" ] || [ $todo == "zsh" ]
+then
+    echo "Installing zsh"
+    setupzsh
+fi
+
+if [ $todo == "vim" ]
+then
+    echo "Installing vim + vimrc"
+    installfile "$BASEPATH/dotfiles/" ".vimrc" "$HOME" ".vimrc"
+    setupvim
+elif [ $todo == "all" ]
+then
+    echo "Installing vim"
+    setupvim
+fi
 
 echo "done"
 exit 0
