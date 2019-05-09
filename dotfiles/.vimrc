@@ -33,6 +33,7 @@ set switchbuf="useopen"         " Open buffers in the current tab, not in other
 set autoread                    " Don't ask to load changed files (when changed
                                 " in git for example), unless there are unsaved
                                 " changes in the buffer.
+au FocusGained,BufEnter * :silent! ! " Make autoread work better
 
 " Make # comments in python stay indented
 autocmd BufRead *.py inoremap # X<c-h>#
