@@ -33,7 +33,8 @@ set switchbuf="useopen"         " Open buffers in the current tab, not in other
 set autoread                    " Don't ask to load changed files (when changed
                                 " in git for example), unless there are unsaved
                                 " changes in the buffer.
-au FocusGained,BufEnter * :silent! ! " Make autoread work better
+" Make autoread work better when switching between buffers
+au FocusGained,BufEnter * :silent! !
 
 " Make # comments in python stay indented
 autocmd BufRead *.py inoremap # X<c-h>#
@@ -103,8 +104,8 @@ noremap <Leader>l   :b#<CR>
 noremap <Leader>d   :bp\|bd #<CR>
 " Close window
 noremap <Leader>D   <C-w>c
-noremap <Leader>N   :tabn<CR>
-noremap <Leader>P   :tabp<CR>
+" Close quickfix and location list
+noremap <Leader>q   :cclose<CR>:lclose<CR>
 " Save
 noremap <silent><Leader>w   :w<CR>
 
