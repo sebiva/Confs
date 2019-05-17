@@ -57,3 +57,24 @@ https://unix.stackexchange.com/questions/448811/how-to-export-a-gnome-terminal-p
 
 Ubuntu Mono derivative Powerline can be found here:
 https://github.com/powerline/fonts
+
+## Building a new vim version in Ubuntu
+
+This will install the new vim to /usr/local/bin, which means it will be before
+the old vim in /usr/bin in the $PATH.
+
+```shell
+sudo apt-get build-dep vim
+git clone https://github.com/vim/vim.git
+
+./configure --with-features=huge \
+            --enable-python3interp=yes \
+            --with-python3-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu
+make
+
+sudo make install
+
+make clean
+make distclean
+
+```
