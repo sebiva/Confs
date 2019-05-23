@@ -5,8 +5,10 @@ set shell=/bin/bash  " zsh was causing problems (can't open tmp)
 " ========================================================================
 set nocompatible                " be iMproved, required
 filetype indent plugin on       " required for latex and vundle
+set backspace=indent,eol,start  " Make backspace work like it should in insert
 set invhlsearch                 " Inversesearch
 set hlsearch
+set incsearch                   " Start searching while typing
 set number                      " Set linenumber
 set shiftwidth=4                " Indentation
 set tabstop=8                   " One tab == 8 spaces
@@ -388,6 +390,6 @@ xmap gs  <plug>(GrepperOperator)
 
 " vim-mark ===============================================================
 " Need to remap these to avoid collisions with <Leader>n and <Leader>r
-nmap <unique> <Leader>s <Plug>MarkRegex
-xmap <unique> <Leader>S <Plug>MarkRegex
-nmap <unique> <Leader>C <Plug>MarkClear
+nmap <Leader>s <Plug>MarkRegex
+xmap <Leader>S <Plug>MarkRegex
+nmap <Leader>C <Plug>MarkClear
