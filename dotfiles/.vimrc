@@ -218,6 +218,8 @@ Plugin 'mhinz/vim-grepper'
 Plugin 'inkarkat/vim-ingo-library'
 " mark/highlight text. Leader-m to mark. :Mark to hide, :ClearMark to remove
 Plugin 'inkarkat/vim-mark'
+" Highlight the word under cursor
+Plugin 'dominikduda/vim_current_word'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -393,3 +395,12 @@ xmap gs  <plug>(GrepperOperator)
 nmap <Leader>s <Plug>MarkRegex
 xmap <Leader>S <Plug>MarkRegex
 nmap <Leader>C <Plug>MarkClear
+
+" vim-current-word =======================================================
+" Mark twins of word under cursor, not the actual word under cursor.
+let g:vim_current_word#highlight_twins = 1
+let g:vim_current_word#highlight_current_word = 0
+" Delay matching (boolean)
+let g:vim_current_word#delay_highlight = 1
+" Highlight color
+hi CurrentWordTwins ctermbg=240
