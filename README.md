@@ -38,6 +38,12 @@ To make it permanent, copy the file to ```/etc/share/kbd/keymaps/i386/dvorak/```
 KEYMAP=dvorak-sv-42.map.gz
 ```
 
+Within X, the layout can be set using:
+
+```
+setxkbmap -layout 'se(svdvorak)' -option caps:escape
+```
+
 ## Restoring terminal settings
 
 ```shell
