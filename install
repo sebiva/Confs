@@ -2,7 +2,7 @@
 
 if [ ! "$#" == 1 ]
 then
-    echo "Usage: install [all | vim | tmux | scripts | dotfiles]"
+    echo "Usage: install [all | zsh | vim | tmux | scripts | dotfiles]"
     exit 1
 fi
 todo=$1
@@ -34,6 +34,11 @@ function setupvim {
         echo ".gitconfig file, or generate a pub-key"
         git clone "http://github.com/VundleVim/Vundle.vim.git" "$HOME/.vim/bundle/Vundle.vim"
     fi
+    # directory for backup-files
+    if [ ! -d "$HOME/tmp" ];
+    then
+        mkdir -p "$HOME/tmp"
+    fi
     installfile "$BASEPATH/dotfiles/" ".vimrc" "$HOME" ".nvimrc"
     vim +PluginInstall +qall
     echo "Plugins installed"
@@ -64,7 +69,7 @@ function setupzsh {
 # Installs a FILE from SRCDIR to DESTDIR.
 # installfile SRCDIR SRCFILE DESTDIR DESTFILE
 function installfile {
-    if [ ! "$#" == 3 ]
+    if [ ! "$#" == 4 ]
     then
         echo "Wrong number of arguments to installfile: $@"
         exit 1

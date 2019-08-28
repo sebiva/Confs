@@ -1,9 +1,1 @@
 Must follow https://github.com/powerline/fonts instructions for correct fonts
-.vim/colors/BenokaiPrime must be copied manually
-.zshrc-stub must be copied manually, then all settings are actually in ~/Confs/.zshrc
-
-See https://unix.stackexchange.com/questions/199836/how-can-i-view-the-content-of-a-backup-of-the-dconf-database-file
-for terminal config
-
-Vim: Ulti-snips
-Suggestions, code completions

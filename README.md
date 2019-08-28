@@ -15,13 +15,13 @@ run.
 Run:
 
 ```shell
-./install
+./install all
 ```
 
-and hope for the best! The script can be modified to ignore vim or zsh by
-simply commenting out the calls to setup\*. If all goes well, the dotfiles
-should be installed to $HOME, and scripts to $HOME/.scripts (which is in the
-PATH in .zshrc).
+and hope for the best! The script can be run with the arguments:
+```all | zsh | vim | tmux | scripts | dotfiles``` to change what parts are to
+be installed.  If all goes well, the dotfiles should be installed to $HOME, and
+scripts to $HOME/.scripts (which is in the PATH in .zshrc).
 
 
 ## Keymap
@@ -43,6 +43,14 @@ Within X, the layout can be set using:
 ```
 setxkbmap -layout 'se(svdvorak)' -option caps:escape
 ```
+
+To set keyrepeat:
+
+```
+set r rate 200 50
+```
+
+These settings can be added to .profile to have them run automatically.
 
 ## Restoring terminal settings
 
