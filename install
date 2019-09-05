@@ -112,18 +112,27 @@ function installfiles {
         echo "Wrong number of arguments to installfiles: $@"
         exit 1
     fi
-    SRCDIR="$1"
-    DESTDIR="$2"
+    local SRCDIR="$1"
+    local DESTDIR="$2"
     echo
     echo "#################"
     echo "Installing files"
     echo "from: $SRCDIR"
     echo "to:   $DESTDIR"
     echo "#################"
-    FILES=$(ls -A $SRCDIR -I ".*.un~")
+    local FILES=$(ls -A $SRCDIR -I ".*.un~")
     for FILE in $FILES
     do
-        installfile "$SRCDIR" "$FILE" "$DESTDIR" "$FILE"
+        # If it's a directory, install them recursively
+        echo "Checking $FILE"
+        if [ -d "$SRCDIR/$FILE" ];
+        then
+            echo "in case"
+            mkdir -p "$DESTDIR/$FILE"
+            installfiles "$SRCDIR/$FILE" "$DESTDIR/$FILE"
+        else
+            installfile "$SRCDIR" "$FILE" "$DESTDIR" "$FILE"
+        fi
     done
 }
 
