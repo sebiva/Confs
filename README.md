@@ -3,7 +3,7 @@
 ## Prerequisites
 
 ```git```, ```zsh```, ```tmux```, ```openssh``` (for ssh support with git),
-```python``` (for ultisnips), ```diff-so-fancy``` (for nicer git diffs).
+```python``` (for ultisnips).
 
 If run as is, the script assumes the user is able to use ssh:// when cloning
 git-repos, if this is not the case, either properly generate the ssh-keys, or

@@ -11,6 +11,10 @@ set -e
 shopt -s dotglob # List . files too
 BASEPATH=$( cd $(dirname $0) ; pwd -P )
 
+diff_so_fancy_repo="https://raw.githubusercontent.com/so-fancy/diff-so-fancy"
+diff_so_fancy_path="master/third_party/build_fatpack/diff-so-fancy"
+diff_so_fancy_url="$diff_so_fancy_repo/$diff_so_fancy_path"
+
 ###############################################################################
 
 function setupvim {
@@ -154,6 +158,8 @@ if [ $todo == "all" ] || [ $todo == "scripts" ]
 then
     echo "Installing scripts"
     mkdir -p $HOME/.scripts
+    wget "$diff_so_fancy_url" -P "$HOME/.scripts"
+    chmod +x "$HOME/.scripts/diff-so-fancy"
     installfiles $BASEPATH/scripts $HOME/.scripts
 fi
 if [ $todo == "all" ] || [ $todo == "zsh" ]
