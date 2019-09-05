@@ -1,0 +1,46 @@
+commit 1e13c6fb7efb04ddc66808d824c31e9d6c89600f
+Author: Sebastian Ivarsson <sebastian.ivarsson@ericsson.com>
+Date:   Wed Apr 4 14:10:58 2018 +0200
+
+    Support rebar2.config as well as rebar.config
+    
+    Move rebar3 down in priority to avoid badmatch on more than one
+    rebar.lock file.
+    
+    Check rebar2.config before rebar.config,  otherwise rebar2 won't work as
+    rebar.config (for rebar3) would take precedence.
+
+diff --git a/compiler/erlang_check.erl b/compiler/erlang_check.erl
+index c4bdfac..0859ec7 100755
+--- a/compiler/erlang_check.erl
++++ b/compiler/erlang_check.erl
+@@ -377,15 +377,16 @@ guess_build_system(Path) ->
+     % The order is important, at least Makefile needs to come last since a lot
+     % of projects include a Makefile along any other build system.
+     BuildSystems = [
+-                    {rebar3, [
+-                              "rebar.lock"
+-                             ]
+-                    },
+                     {rebar, [
++                             "rebar2.config",
+                              "rebar.config",
+                              "rebar.config.script"
+                             ]
+                     },
++                    {rebar3, [
++                              "rebar.lock"
++                             ]
++                    },
+                     {makefile, [
+                             "Makefile"
+                            ]
+@@ -450,7 +451,7 @@ load_build_files(rebar, _ProjectRoot, ConfigFiles) ->
+     load_rebar_files(ConfigFiles, no_config);
+ load_build_files(rebar3, ProjectRoot, _ConfigFiles) ->
+     % _ConfigFiles is a list containing only rebar.lock.
+-    ConfigNames = ["rebar.config", "rebar.config.script"],
++    ConfigNames = ["rebar.config", "rebar2.config", "rebar.config.script"],
+     case find_files(ProjectRoot, ConfigNames) of
+         [] ->
+             log_error("rebar.config not found in ~p~n", [ProjectRoot]),

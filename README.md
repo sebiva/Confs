@@ -23,6 +23,11 @@ and hope for the best! The script can be run with the arguments:
 be installed.  If all goes well, the dotfiles should be installed to $HOME, and
 scripts to $HOME/.scripts (which is in the PATH in .zshrc).
 
+## Vim adaptations
+
+To get certain erlang repositories working (mixing rebar2 and rebar3), the
+'vim-erlang-compiler.path' file must be applied to the plugin in
+~/.vim/bundle/vim-erlang-compiler after vim has been installed.
 
 ## Keymap
 
