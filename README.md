@@ -3,7 +3,7 @@
 ## Prerequisites
 
 ```git```, ```zsh```, ```tmux```, ```openssh``` (for ssh support with git),
-```python``` (for ultisnips).
+```python``` (for ultisnips), ```silversearcher-ag``` (for git-grepper in vim).
 
 If run as is, the script assumes the user is able to use ssh:// when cloning
 git-repos, if this is not the case, either properly generate the ssh-keys, or
@@ -83,12 +83,12 @@ This will install the new vim to /usr/local/bin, which means it will be before
 the old vim in /usr/bin in the $PATH.
 
 ```shell
-sudo apt-get build-dep vim
+sudo apt build-dep vim
 git clone https://github.com/vim/vim.git
 
 ./configure --with-features=huge \
             --enable-python3interp=yes \
-            --with-python3-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu
+            --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu
 make
 
 sudo make install
