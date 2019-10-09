@@ -35,6 +35,7 @@ set switchbuf="useopen"         " Open buffers in the current tab, not in other
 set autoread                    " Don't ask to load changed files (when changed
                                 " in git for example), unless there are unsaved
                                 " changes in the buffer.
+set termguicolors               " Set full color support in terminal
 " Make autoread work better when switching between buffers
 au FocusGained,BufEnter * :silent! !
 
@@ -403,4 +404,4 @@ let g:vim_current_word#highlight_current_word = 0
 " Delay matching (boolean)
 let g:vim_current_word#delay_highlight = 1
 " Highlight color
-hi CurrentWordTwins ctermbg=240
+hi CurrentWordTwins ctermbg=240 guibg=#4c4d47 gui=underline
