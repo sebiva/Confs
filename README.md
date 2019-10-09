@@ -3,7 +3,8 @@
 ## Prerequisites
 
 ```git```, ```zsh```, ```tmux```, ```openssh``` (for ssh support with git),
-```python``` (for ultisnips), ```silversearcher-ag``` (for git-grepper in vim).
+```python``` (for ultisnips), ```silversearcher-ag``` (for git-grepper in vim),
+```xdotool''' (for easier pasting in i3).
 
 If run as is, the script assumes the user is able to use ssh:// when cloning
 git-repos, if this is not the case, either properly generate the ssh-keys, or

@@ -26,15 +26,6 @@ font pango:DejaVu Sans Mono 8
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-# Set a wallpaper
-exec_always --no-startup-id feh --bg-scale ~/wallpaper.jpg
-
-# Turn the screen off after 2 hours.
-exec_always "xset dpms 7200"
-# Set a decent keyrepeat and the correct layout
-exec_always xset r rate 200 50
-exec_always setxkbmap -layout 'se(svdvorak)' -option caps:escape
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -76,7 +67,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+ö split h
+bindsym $mod+u split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -167,6 +158,17 @@ bar {
         status_command i3status
 }
 
+# X related settings
+
+# Set a wallpaper
+exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpaper.jpg
+
+# Turn the screen off after 2 hours.
+exec_always "xset dpms 7200"
+# Set a decent keyrepeat and the correct layout
+exec_always xset r rate 250 50
+exec_always setxkbmap -layout 'se(svdvorak)' -option caps:escape
+
 # Screen lock
 bindsym $mod+g exec "i3lock -c 333355; xset dpms force standby"
 bindsym $mod+Shift+G exec "i3lock -c 333355; systemctl suspend"
@@ -175,3 +177,13 @@ bindsym $mod+Shift+G exec "i3lock -c 333355; systemctl suspend"
 bindsym $mod+F8 exec "~/.scripts/laptop"
 bindsym $mod+F9 exec "~/.scripts/desk"
 bindsym $mod+F10 exec "~/.scripts/external"
+
+# Make tilde not dead
+# For some reason setting exec_always on the xmodmap command does not work,
+# so add a shortcut for it instead.
+bindsym $mod+dead_diaeresis exec "~/.scripts/fix_tilde"
+
+# Emulate middle-mouse paste
+bindsym $mod+b exec "xdotool click 2"
+
+# Other settings

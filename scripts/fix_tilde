@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xmodmap -e 'keycode 35 = diaeresis asciicircum diaeresis asciicircum asciitilde caron asciitilde caron bracketright braceright'
