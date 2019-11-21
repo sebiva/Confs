@@ -1,0 +1,8 @@
+#!/bin/bash
+
+## This needs to be run when manjaro-i3 is started for some reason
+if grep ManjaroLinux /etc/lsb-release > /dev/null; then
+    pkill pulseaudio && dbus-launch
+    sleep 1
+    pulseaudio &
+fi

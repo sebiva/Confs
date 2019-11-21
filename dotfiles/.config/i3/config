@@ -203,4 +203,7 @@ bindsym $mod+dead_diaeresis exec "~/.scripts/fix_tilde"
 # Emulate middle-mouse paste
 bindsym $mod+b exec "xdotool click 2"
 
+# Sound in manjaro
+exec_always "if -e ~/.scripts/fix_sound; then ~/.scripts/fix_sound; fi"
+
 # Other settings
