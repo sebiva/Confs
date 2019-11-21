@@ -28,7 +28,6 @@ function setupvim {
     then
         mkdir -p "$HOME/.vim/colors"
     fi
-    cp "$BASEPATH/BenokaiPrime.vim" "$HOME/.vim/colors"
     # vundle
     if [ ! -d "$HOME/.vim/bundle" ];
     then
@@ -123,7 +122,6 @@ function installfiles {
     echo "Installing files"
     echo "from: $SRCDIR"
     echo "to:   $DESTDIR"
-    echo "#################"
     local FILES=$(ls -A $SRCDIR -I ".*.un~")
     for FILE in $FILES
     do
@@ -131,13 +129,13 @@ function installfiles {
         echo "Checking $FILE"
         if [ -d "$SRCDIR/$FILE" ];
         then
-            echo "in case"
             mkdir -p "$DESTDIR/$FILE"
             installfiles "$SRCDIR/$FILE" "$DESTDIR/$FILE"
         else
             installfile "$SRCDIR" "$FILE" "$DESTDIR" "$FILE"
         fi
     done
+    echo "#################"
 }
 
 ###############################################################################
