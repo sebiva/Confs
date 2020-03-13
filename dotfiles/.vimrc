@@ -261,6 +261,18 @@ set statusline+=%*
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_regexp = 1
+" The below is taken from https://github.com/kien/ctrlp.vim/issues/282
+" It translates space or dash to match underscore/dash/space.
+let g:ctrlp_abbrev = {
+    \ 'gmode': 'i',
+    \ 'abbrevs': [
+        \ {
+        \ 'pattern': '\(^@.\+\|\\\@<!:.\+\)\@<![-\ ]',
+        \ 'expanded': '[ _-]',
+        \ 'mode': 'pfrz',
+        \ },
+        \ ]
+    \ }
 let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.hi,*.beam
 
