@@ -194,6 +194,7 @@ bindsym $mod+Shift+G exec "i3lock -c 333355; systemctl suspend"
 bindsym $mod+F8 exec "~/.scripts/laptop"
 bindsym $mod+F9 exec "~/.scripts/desk"
 bindsym $mod+F10 exec "~/.scripts/external"
+bindsym $mod+F11 exec "~/.scripts/homescreen"
 
 # Make tilde not dead
 # For some reason setting exec_always on the xmodmap command does not work,
@@ -205,5 +206,7 @@ bindsym $mod+b exec "xdotool click 2"
 
 # Sound in manjaro
 exec_always "if -e ~/.scripts/fix_sound; then ~/.scripts/fix_sound; fi"
+# Printscreen
+bindsym --release Print exec gnome-screenshot -i
 
 # Other settings
