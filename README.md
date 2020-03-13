@@ -30,6 +30,9 @@ To get certain erlang repositories working (mixing rebar2 and rebar3), the
 'vim-erlang-compiler.path' file must be applied to the plugin in
 ~/.vim/bundle/vim-erlang-compiler after vim has been installed.
 
+Snippets:
+.vim/bundle/vim-snippets/UltiSnips/erlang.snippets
+
 ## Keymap
 
 In Arch, the keymap for proper svdvorak can be loaded by:
