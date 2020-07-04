@@ -321,8 +321,14 @@ let g:neomake_erlang_flycheck_maker = {
 let g:neomake_open_list = 2
 noremap <Leader>c :Neomake<CR>
 
-" Don't automatically compile on write
-autocmd BufWritePost * Neomake
+" Disable for latex (since \ll works on demand). If to be used, setting
+" ['lacheck'] avoids an overload of errors.
+let g:neomake_latex_enabled_makers = []
+let g:neomake_tex_enabled_makers = []
+
+" Automatically compile on write
+call neomake#configure#automake('w')
+"autocmd BufWritePost * Neomake
 
 "noremap <silent> <Leader>c :ErlangEnableShowErrors :call erlang_compiler#AutoRun(expand("<abuf>")+0)<CR>
 "command! -nargs=1 Silent
@@ -354,6 +360,8 @@ highlight ExtraWhitespace ctermbg=red
 " ========================================================================
 
 " Latex ==================================================================
+"
+" To compile; run Mapleader-ll
 
 " IMPORTANT: grep will sometimes skip displaying the file name if you
 " search in a singe file. This will confuse Latex-Suite. Set your grep
