@@ -219,3 +219,6 @@ exec --no-startup-id volumeicon  # Volumecontrol
 exec --no-startup-id nm-applet  # Network manager
 
 # Other settings
+
+# Clicking the right mouse button over a titlebar kills the window
+bindsym --release button3 kill
