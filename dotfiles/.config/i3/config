@@ -184,7 +184,12 @@ exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpaper.jpg
 exec_always "xset dpms 7200"
 # Set a decent keyrepeat and the correct layout
 exec_always xset r rate 250 50
-exec_always setxkbmap -layout 'se(svdvorak)' -option caps:escape
+set $layout 'se(svdvorak)' -option caps:escape
+exec_always setxkbmap -layout $layout
+
+# Mod+F1 and Mod+F2 change keyboard layout
+bindsym $mod+F1 exec --no-startup-id "setxkbmap -layout 'se'"
+bindsym $mod+F2 exec --no-startup-id "setxkbmap -layout $layout"
 
 # Screen lock
 bindsym $mod+g exec "i3lock -c 333355; xset dpms force standby"
