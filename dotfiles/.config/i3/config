@@ -214,4 +214,8 @@ exec_always "if -e ~/.scripts/fix_sound; then ~/.scripts/fix_sound; fi"
 # Printscreen
 bindsym --release Print exec gnome-screenshot -i
 
+# Status bar
+exec --no-startup-id volumeicon  # Volumecontrol
+exec --no-startup-id nm-applet  # Network manager
+
 # Other settings
