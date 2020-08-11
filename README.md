@@ -2,9 +2,21 @@
 
 ## Prerequisites
 
-```git```, ```zsh```, ```tmux```, ```openssh``` (for ssh support with git),
-```python``` (for ultisnips), ```silversearcher-ag``` (for git-grepper in vim),
-```xdotool``` (for easier pasting in i3).
+```
+git
+vim
+zsh
+tmux
+openssh # (for ssh support with git),
+python # (for ultisnips),
+gnome-terminal
+xclip
+xdotool # (for easier pasting in i3).
+```
+### AUR packages
+```
+silversearcher-ag # (for git-grepper in vim),
+```
 
 If run as is, the script assumes the user is able to use ssh:// when cloning
 git-repos, if this is not the case, either properly generate the ssh-keys, or
@@ -101,3 +113,17 @@ make clean
 make distclean
 
 ```
+
+## Sound in Arch
+
+It seems some manual intervention is needed to get sound in Arch/Manjaro.
+Following this thread: https://forum.manjaro.org/t/no-sound-after-clean-install-of-manjaro-i3/9616/11
+Creating the file /etc/modprobe.d/alsa-base.conf with the following content
+seems to work:
+
+```
+options snd_hda_intel index=1
+```
+
+## Changing the i3 d-menu path
+Update $PATH in ~/.profile
