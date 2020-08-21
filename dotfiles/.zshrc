@@ -47,6 +47,7 @@ $HOME/opt:
 /usr/local/sbin:
 /usr/local/bin:
 /usr/bin:
+/usr/sbin:
 /bin:
 $HOME/.scripts:
 $HOME/.gem/ruby/2.7.0/bin:
