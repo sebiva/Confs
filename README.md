@@ -104,7 +104,7 @@ git clone https://github.com/vim/vim.git
 
 ./configure --with-features=huge \
             --enable-python3interp=yes \
-            --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu
+            --with-python3-config-dir=/usr/lib/python3.8/config-3.8m-x86_64-linux-gnu
 make
 
 sudo make install
