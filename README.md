@@ -125,5 +125,15 @@ seems to work:
 options snd_hda_intel index=1
 ```
 
+### Manjaro
+
+Manjaro has a helperscript:
+```
+/usr/bin/install_pulse
+```
+
+It installs pulseaudio and pavucontrol which allows for switching between laptop and HDMI.
+
+
 ## Changing the i3 d-menu path
 Update $PATH in ~/.profile
