@@ -1,1 +1,5 @@
 Must follow https://github.com/powerline/fonts instructions for correct fonts
+
+Redshift nightmode:
+
+redshift -l 58.41:15.62
