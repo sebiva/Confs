@@ -1,0 +1,15 @@
+#!/bin/bash
+
+output=$(xinput --list | grep "Logitech USB-PS/2 Optical Mouse" | cut -d$'\t' -f2)
+if [ -z "$output" ]; then
+    exit 1
+fi
+
+# Remove "id=" from "id=25"
+num=${output#id=*}
+
+# Swap left and right mouse buttons
+echo "Setting $num"
+echo $PATH
+xinput set-button-map "$num" 3 2 1
+echo $?

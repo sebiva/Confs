@@ -107,7 +107,7 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+c focus child
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -180,14 +180,15 @@ bar {
 # Set a wallpaper
 exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpaper.jpg
 
+exec_always --no-startup-id "~/.scripts/fix_x > /tmp/fixing_x.txt"
 # Turn the screen off after 2 hours.
-exec_always --no-startup-id "xset dpms 7200"
+#exec_always --no-startup-id "xset dpms 7200"
 # Set a decent keyrepeat and the correct layout
-exec_always --no-startup-id xset r rate 250 50
-set $layout 'se(svdvorak)' -option caps:escape
-exec_always --no-startup-id setxkbmap -layout $layout
+#exec_always --no-startup-id xset r rate 250 50
+#exec_always --no-startup-id setxkbmap -layout $layout
 
 # Mod+F1 and Mod+F2 change keyboard layout
+set $layout 'se(svdvorak)' -option caps:escape
 bindsym $mod+F1 exec --no-startup-id "setxkbmap -layout 'se'"
 bindsym $mod+F2 exec --no-startup-id "setxkbmap -layout $layout"
 
@@ -200,11 +201,13 @@ bindsym $mod+F8 exec --no-startup-id "~/.scripts/laptop"
 bindsym $mod+F9 exec --no-startup-id "~/.scripts/desk"
 bindsym $mod+F10 exec --no-startup-id "~/.scripts/external"
 bindsym $mod+F11 exec --no-startup-id "~/.scripts/homescreen"
+bindsym $mod+F12 exec --no-startup-id "~/.scripts/homedouble"
 
 # Make tilde not dead
 # For some reason setting exec_always on the xmodmap command does not work,
 # so add a shortcut for it instead.
-bindsym $mod+dead_diaeresis exec --no-startup-id "~/.scripts/fix_tilde"
+# TODO
+#bindsym $mod+dead_diaeresis exec --no-startup-id "~/.scripts/fix_tilde"
 
 # Emulate middle-mouse paste
 bindsym $mod+b exec --no-startup-id "xdotool click 2"
@@ -222,3 +225,7 @@ exec --no-startup-id nm-applet  # Network manager
 
 # Clicking the right mouse button over a titlebar kills the window
 bindsym --release button3 kill
+
+# move focused window between monitors
+bindsym $mod+greater move workspace to output right
+bindsym $mod+less move workspace to output left

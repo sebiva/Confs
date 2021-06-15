@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Turn the screen off after 2 hours.
+xset dpms 7200 7200 7200
+# Screensaver after 1 hour
+xset s 3600 3600
+# Set a decent keyrepeat and the correct layout
+xset r rate 250 50
+setxkbmap -layout 'se(svdvorak)' -option caps:escape
+# For the big screen
+xrandr --dpi 120
+
+# Make tilde not dead
+~/.scripts/fix_tilde
+
+# Sound in manjaro
+if -e ~/.scripts/fix_sound; then
+    ~/.scripts/fix_sound;
+fi
+
+## Swap mouse buttons
+~/.scripts/left_mouse
+
+echo "fixed x"
