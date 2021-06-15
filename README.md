@@ -12,6 +12,7 @@ python # (for ultisnips),
 gnome-terminal
 xclip
 xdotool # (for easier pasting in i3).
+feh # (for the background image in i3)
 ```
 ### AUR packages
 ```
@@ -137,3 +138,13 @@ It installs pulseaudio and pavucontrol which allows for switching between laptop
 
 ## Changing the i3 d-menu path
 Update $PATH in ~/.profile
+
+## Screen Brightness
+In arch/manjaro:
+```
+xbacklight -set 50
+```
+In ubuntu:
+```
+xrandr --output eDP-1 --brightness 0.5
+```
