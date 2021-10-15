@@ -19,6 +19,6 @@ if -e ~/.scripts/fix_sound; then
 fi
 
 ## Swap mouse buttons
-~/.scripts/left_mouse
+#~/.scripts/left_mouse
 
 echo "fixed x"

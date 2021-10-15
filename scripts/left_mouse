@@ -10,6 +10,5 @@ num=${output#id=*}
 
 # Swap left and right mouse buttons
 echo "Setting $num"
-echo $PATH
 xinput set-button-map "$num" 3 2 1
 echo $?
