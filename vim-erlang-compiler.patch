@@ -1,20 +1,43 @@
-commit 1e13c6fb7efb04ddc66808d824c31e9d6c89600f
-Author: Sebastian Ivarsson <sebastian.ivarsson@ericsson.com>
-Date:   Wed Apr 4 14:10:58 2018 +0200
-
-    Support rebar2.config as well as rebar.config
-    
-    Move rebar3 down in priority to avoid badmatch on more than one
-    rebar.lock file.
-    
-    Check rebar2.config before rebar.config,  otherwise rebar2 won't work as
-    rebar.config (for rebar3) would take precedence.
-
 diff --git a/compiler/erlang_check.erl b/compiler/erlang_check.erl
-index c4bdfac..0859ec7 100755
+index e99afa3..9d5004b 100755
 --- a/compiler/erlang_check.erl
 +++ b/compiler/erlang_check.erl
-@@ -377,15 +377,16 @@ guess_build_system(Path) ->
+@@ -203,6 +203,8 @@ disable(Arg) ->
+       File :: string().
+ check_file(File) ->
+     case file_type(File) of
++        hrl ->
++            ok;
+         module ->
+             check_module(File);
+         escript ->
+@@ -220,13 +222,18 @@ check_file(File) ->
+       File :: string(),
+       Result :: module | escript | {error, term()}.
+ file_type(File) ->
+-    case file:open(File, [raw, read]) of
+-        {ok, Fd} ->
+-            Result = read_file_type(Fd),
+-            ok = file:close(Fd),
+-            Result;
+-        {error, _Reason}  = Error ->
+-            Error
++    case lists:reverse(File) of
++        "lrh" ++ _HrlFile ->
++            hrl;
++        _ ->
++            case file:open(File, [raw, read]) of
++                {ok, Fd} ->
++                    Result = read_file_type(Fd),
++                    ok = file:close(Fd),
++                    Result;
++                {error, _Reason}  = Error ->
++                    Error
++            end
+     end.
+ 
+ %%------------------------------------------------------------------------------
+@@ -359,15 +366,16 @@ guess_build_system(Path) ->
      % The order is important, at least Makefile needs to come last since a lot
      % of projects include a Makefile along any other build system.
      BuildSystems = [
@@ -35,7 +58,7 @@ index c4bdfac..0859ec7 100755
                      {makefile, [
                              "Makefile"
                             ]
-@@ -450,7 +451,7 @@ load_build_files(rebar, _ProjectRoot, ConfigFiles) ->
+@@ -478,7 +486,7 @@ load_build_files(rebar, _ProjectRoot, ConfigFiles) ->
      load_rebar_files(ConfigFiles, no_config);
  load_build_files(rebar3, ProjectRoot, _ConfigFiles) ->
      % _ConfigFiles is a list containing only rebar.lock.
