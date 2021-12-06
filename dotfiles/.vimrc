@@ -310,11 +310,12 @@ function! s:flycheck_postprocess(entry)
 endfunction
 
 " . is used for concat with $HOME
+" Setting errorformat here would overwrite the correct one in the erlang plugin,
+" so don't do that.
 let g:neomake_erlang_enabled_makers = ['flycheck']
 let g:neomake_erlang_flycheck_maker = {
     \ 'exe': $HOME . '/.vim/bundle/vim-erlang-compiler/compiler/erlang_check.erl',
     \ 'args': ['--nooutdir'],
-    \ 'errorformat': '%f:%l: %m,%f: %m',
     \ 'postprocess': function('s:flycheck_postprocess')
     \ }
 let g:neomake_open_list = 2
@@ -417,3 +418,11 @@ let g:vim_current_word#highlight_current_word = 0
 let g:vim_current_word#delay_highlight = 1
 " Highlight color
 hi CurrentWordTwins ctermbg=240 guibg=#4c4d47 gui=underline
+
+
+" For some strange rubbish after upgrading vim:
+" https://stackoverflow.com/questions/62148994/strange-character-since-last-update-42m-in-vim"
+let &t_TI = ""
+let &t_TE = ""
+
+"set errorformat=%m
