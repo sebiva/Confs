@@ -196,10 +196,10 @@ bindsym $mod+F2 exec --no-startup-id "setxkbmap -layout $layout"
 bindsym $mod+g exec --no-startup-id "i3lock -c 333355; xset dpms force standby"
 bindsym $mod+Shift+G exec --no-startup-id "i3lock -c 333355; systemctl suspend"
 
-# xrandr scripts for displays
-bindsym $mod+F7 exec --no-startup-id "~/.scripts/homeoffice"
+# xrandr/arandr scripts for displays
+bindsym $mod+F7 exec --no-startup-id "~/.screenlayout/homeoffice.sh"
 bindsym $mod+F8 exec --no-startup-id "~/.scripts/laptop"
-bindsym $mod+F9 exec --no-startup-id "~/.scripts/desk"
+bindsym $mod+F9 exec --no-startup-id "~/.screenlayout/desk.sh"
 bindsym $mod+F10 exec --no-startup-id "~/.scripts/external"
 bindsym $mod+F11 exec --no-startup-id "~/.scripts/homescreen"
 bindsym $mod+F12 exec --no-startup-id "~/.scripts/double"
