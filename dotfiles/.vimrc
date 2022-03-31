@@ -415,7 +415,7 @@ nmap <Leader>C <Plug>MarkClear
 let g:vim_current_word#highlight_twins = 1
 let g:vim_current_word#highlight_current_word = 0
 " Delay matching (boolean)
-let g:vim_current_word#delay_highlight = 1
+let g:vim_current_word#highlight_delay = 500
 " Highlight color
 hi CurrentWordTwins ctermbg=240 guibg=#4c4d47 gui=underline
 
