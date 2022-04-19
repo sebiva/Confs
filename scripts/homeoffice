@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Office desk setup
+$HOME/.screenlayout/homeoffice.sh
+
