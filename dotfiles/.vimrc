@@ -221,6 +221,8 @@ Plugin 'inkarkat/vim-ingo-library'
 Plugin 'inkarkat/vim-mark'
 " Highlight the word under cursor
 Plugin 'dominikduda/vim_current_word'
+" Language server (LSP)
+Plugin 'prabirshrestha/vim-lsp'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -425,4 +427,35 @@ hi CurrentWordTwins ctermbg=240 guibg=#4c4d47 gui=underline
 let &t_TI = ""
 let &t_TE = ""
 
-"set errorformat=%m
+" LSP (language server)
+if executable('erlang_ls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'erlang_ls',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'erlang_ls --transport stdio']},
+        \ 'allowlist': ['erlang'],
+        \ })
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    "setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    let g:lsp_format_sync_timeout = 1000
+endfunction
+let g:lsp_diagnostics_enabled = 0 " disable diagnostics support (compiler)
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
