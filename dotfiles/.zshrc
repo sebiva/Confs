@@ -51,6 +51,9 @@ $HOME/opt:
 /bin:
 $HOME/.scripts:
 $HOME/.gem/ruby/2.7.0/bin:
+$HOME/Dev/rebar3:
+$HOME/opt/erlang_ls/bin:
+
 " | paste -sd "" -)
 
 # Emacs mode

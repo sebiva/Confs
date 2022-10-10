@@ -428,6 +428,7 @@ let &t_TI = ""
 let &t_TE = ""
 
 " LSP (language server)
+" https://github.com/erlang-ls/erlang_ls is needed
 if executable('erlang_ls')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'erlang_ls',
