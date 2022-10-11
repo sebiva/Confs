@@ -28,7 +28,6 @@ function setupvim {
     then
         mkdir -p "$HOME/.vim/colors"
     fi
-    installfile "$BASEPATH/.vim/colors/" "BenokaiPrime.vim" "$HOME" "BenokaiPrime.vim"
     # vundle
     if [ ! -d "$HOME/.vim/bundle" ];
     then
