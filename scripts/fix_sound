@@ -1,8 +1,8 @@
 #!/bin/bash
-echo "make sure the correct output is chosen in pavucontrol"
 
 ## This needs to be run when manjaro-i3 is started for some reason
 if grep ManjaroLinux /etc/lsb-release > /dev/null; then
+    echo "make sure the correct output is chosen in pavucontrol"
     pkill pulseaudio && dbus-launch
     sleep 4
     pulseaudio &

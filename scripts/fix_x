@@ -14,7 +14,7 @@ xrandr --dpi 120
 ~/.scripts/fix_tilde
 
 # Sound in manjaro
-if -e ~/.scripts/fix_sound; then
+if [ -e ~/.scripts/fix_sound ]; then
     ~/.scripts/fix_sound;
 fi
 
