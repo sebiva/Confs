@@ -1,0 +1,1 @@
+/home/ezivase/.xmonad/xmonad.hs
